@@ -1,0 +1,23 @@
+<h1>Login</h1>
+<% @user = User.new %>
+<%= form_tag user_sessions_path, :method => :post do %>
+  <div class="field">
+    <%= label_tag :email %><br />
+    <%= text_field_tag :email %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %><br />
+    <%= password_field_tag :password %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Login" %>
+  </div>
+<% end %>
+
+<div style="margin-top: 20px;">
+  <%= link_to 'Login with VK', auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %> | 
+  <%= link_to 'Login with Facebook', auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
+</div>
+<div style="margin-top: 20px;">
+  <%= link_to "Register", new_user_path, class: "btn btn-success" %>
+</div>

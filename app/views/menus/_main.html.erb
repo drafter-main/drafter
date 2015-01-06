@@ -1,0 +1,35 @@
+<nav id="menu_main" class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+      <a class="navbar-brand" href="#">Drafter</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <ul class="nav navbar-nav left_buttons">
+        <li class="active"><a href="#">Гаряче</a></li>
+        <li><a href="#">Нове</a></li>
+        <li><a href="#">Найкраще</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a role="button"  data-toggle="modal" class="right_buttons" id="user_actions" href="#"><i class="glyphicon glyphicon-user"></i></a></li>
+        <li><a class="right_buttons" href="#">ff</a></li>
+        <li><a class="right_buttons" href="#">ff</a></li>
+        <li><a class="right_buttons" href="#">ff</a></li>
+        <% if current_user %>
+          <li>
+            <%= link_to "Out", :logout, method: :post, class: "right_buttons" %>
+          </li>
+        <% else %>
+          <li><a class="right_buttons" href="#">ff</a></li>
+        <% end %>
+        <li><a class="right_buttons" href="#">ff</a></li>
+      </ul>
+  </div><!-- /.container-fluid -->
+  <div class="bottom_line"></div>
+</nav>
