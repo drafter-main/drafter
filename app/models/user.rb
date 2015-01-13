@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
     config.authentications_class = Authentication
   end
 
+  has_many :comments, through: :posts
+  has_many :posts
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications
 
