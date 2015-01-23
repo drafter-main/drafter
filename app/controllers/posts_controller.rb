@@ -15,7 +15,7 @@ class PostsController < ApplicationController
 
   def create
     @post = current_user.posts.create(post_params)
-    if @post.valid?
+    if @post.save
       redirect_to(root_url, notice: 'Post was successfully created')
     else
       redirect_to action: :new
@@ -28,6 +28,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :description)
+    params.require(:post).permit(:title, :description, :tag_list)
   end
 end

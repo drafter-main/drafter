@@ -15,3 +15,22 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.tags_popular {
+  color: #879096;
+  .tag_unit {
+    margin-bottom: 7px;
+    a {
+      color: #879096;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .tag_name {
+      padding: 2px;
+      border-style: solid;
+      border-width: 1px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+  }
+}
