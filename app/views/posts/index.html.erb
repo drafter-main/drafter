@@ -2,29 +2,5 @@
   <p id="notice"><%= flash[:notice] %></p>
   <p id="alert"><%= flash[:alert] %></p>
 </div>
-<% @posts.each do |post| %>
-  <div class="post">
-    <div class="post_title">
-      <%= link_to post.title, post %>
-    </div>
-    <div class="post_description">
-      <%= post.description %>
-    </div>
-    <div class="post_bottom_1 row">
-      <span class="rating_post"><strong>34343 тіпа рейтинг</strong></span>
-      <span class="amount_comments"><strong>434334 тіпа коменти</strong></span>
-      <span class="post_tags">
-        <% post.tags.each do |tag|%>
-         <%= link_to tag.name, tag_path(tag), class: 'tag_post_index' %>
-        <% end %>
-      </span>
-    </div>
-    <div class="post_bottom_2">
-      <div class="glyphicon glyphicon-thumbs-up"></div>
-      <div class="glyphicon glyphicon-thumbs-down col-xs-offset-1"></div>
-      <div class="glyphicon glyphicon-envelope col-xs-offset-1"></div>
-      <div class="glyphicon glyphicon-plus col-xs-offset-5"></div>
-    </div>
-  </div>
-  <hr>
-<% end %>
+
+<div><%= render @posts %></div>
