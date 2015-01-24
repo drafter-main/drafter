@@ -8,5 +8,7 @@
     <%= f.label :description %>
     <%= f.text_area :description, class: 'form-control', placeholder: 'Enter description' %>
   </div>
+  <%= f.label :tags %>
+  <%= f.text_field :tag_list %>
   <%= f.submit :Submit, class: 'btn btn-default' %>
 <% end %>

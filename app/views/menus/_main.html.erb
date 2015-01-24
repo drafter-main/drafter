@@ -12,9 +12,19 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
       <ul class="nav navbar-nav left_buttons">
-        <li class="active"><a href="#">Гаряче</a></li>
+        <li class="active"><a href="<%= root_path%>">Гаряче</a></li>
         <li><a href="#">Нове</a></li>
         <li><a href="#">Найкраще</a></li>
+        <li>
+          <span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+            Більше
+          </span>
+          <ul class="dropdown-menu" role="menu">
+            <% @tags.each do |tag| %>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= tag_path(tag) %>"><%= tag.name %></a></li>
+            <% end %>
+          </ul>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a role="button"  data-toggle="modal" class="right_buttons" id="user_actions" href="#"><i class="glyphicon glyphicon-user"></i></a></li>

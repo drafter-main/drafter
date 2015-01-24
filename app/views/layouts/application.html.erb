@@ -8,8 +8,25 @@
 </head>
 <body>
   <%= render 'menus/main'%>
-  <div class="main_body col-md-7">
+  <div class="main_body col-xs-7">
     <%= yield %>
+  </div>
+  <div class="right_column col-xs-4">
+    <div class="tags_popular row">
+      <h5>Популярні теги</h5>
+      <hr>
+      <% @tags.each do |tag| %>
+        <div class="tag_unit">
+          <a href='<%= tag_path(tag) %>'>
+            <span class="tag_name"><%= tag.name %></span>
+            <span class="tag_quantity"><%= tag.taggings_count %></span>
+          </a>
+        </div>
+      <% end %>
+    </div>
+    <div class="banner row" style="margin-top: 30px;">
+      Хуянер
+    </div>
   </div>
   <%= render 'modals/user_actions'%>
 </body>

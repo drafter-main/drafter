@@ -6,4 +6,7 @@
     <%= @post.description %>
   </div>
 </div>
+<% if @post.tags.any? %>
+  <div><%= render @post.tags %></div>
+<% end %>
 <hr>

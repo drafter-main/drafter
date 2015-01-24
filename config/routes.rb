@@ -5,6 +5,7 @@ resources :user_sessions
 resources :users
 
 resources :posts
+resources :tags, only: [:index, :show]
 resources :comments
 
 post "oauth/callback" => "oauths#callback"

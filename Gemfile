@@ -13,6 +13,9 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 
+# tags for posts
+gem 'acts-as-taggable-on', '~> 3.4'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
