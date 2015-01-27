@@ -34,6 +34,9 @@ GEM
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
     builder (3.2.2)
+    closure_tree (5.0.0)
+      activerecord (>= 3.2.0)
+      with_advisory_lock (>= 3.0.0)
     erubis (2.7.0)
     execjs (2.2.1)
     faraday (0.9.0)
@@ -120,6 +123,9 @@ GEM
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    with_advisory_lock (3.0.0)
+      activerecord (>= 3.2)
+      thread_safe
 
 PLATFORMS
   ruby
@@ -127,6 +133,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.4)
   bootstrap-sass (~> 3.2.0)
+  closure_tree (~> 5.0.0)
   jbuilder (~> 2.0)
   jquery-rails
   mysql2

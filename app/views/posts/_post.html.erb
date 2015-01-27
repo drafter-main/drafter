@@ -7,7 +7,7 @@
   </div>
   <div class="post_bottom_1 row">
     <span class="rating_post"><strong>34343 тіпа рейтинг</strong></span>
-    <span class="amount_comments"><strong>434334 тіпа коменти</strong></span>
+    <span class="amount_comments"><strong><%= comments_notification(@comments_count ? @comments_count : post.comments.count)  %></strong></span>
       <span class="post_tags">
         <% post.tags.each do |tag|%>
          <%= link_to tag.name, tag_path(tag), class: 'tag_post_index' %>

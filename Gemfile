@@ -12,7 +12,8 @@ gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
-
+# comments
+gem 'closure_tree', '~> 5.0.0'
 # tags for posts
 gem 'acts-as-taggable-on', '~> 3.4'
 
