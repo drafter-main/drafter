@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119194803) do
+ActiveRecord::Schema.define(version: 20150127120328) do
 
   create_table "authentications", force: true do |t|
     t.integer  "user_id",    null: false
@@ -21,12 +21,22 @@ ActiveRecord::Schema.define(version: 20150119194803) do
     t.datetime "updated_at"
   end
 
+  create_table "comment_hierarchies", id: false, force: true do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "comment_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_udx", unique: true, using: :btree
+  add_index "comment_hierarchies", ["descendant_id"], name: "comment_desc_idx", using: :btree
+
   create_table "comments", force: true do |t|
     t.integer  "user_id"
     t.integer  "post_id"
     t.string   "com_body"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "parent_id"
   end
 
   create_table "posts", force: true do |t|

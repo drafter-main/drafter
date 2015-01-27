@@ -2,11 +2,13 @@ class PostsController < ApplicationController
   before_filter :require_login, :except => [:index, :show]
 
   def index
-    @posts = Post.all
+    @posts = Post.includes(:comments).all
   end
 
   def show
     @post = Post.find(params[:id])
+    @comments = Comment.includes(:user).where(post_id: @post.id).hash_tree
+    @comments_count = comments_count(@comments)
   end
 
   def new
@@ -29,5 +31,16 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :description, :tag_list)
+  end
+
+  def comments_count(comments)
+    count = 0
+    count += comments.length
+    if comments.length > 0
+      comments.each do |comment, nested_comments|
+        count += comments_count(nested_comments)
+      end
+    end
+    count
   end
 end

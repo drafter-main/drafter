@@ -1,0 +1,17 @@
+<div id="add_new_comment">
+  <%= form_tag "", class: 'new_comment' do %>
+    <div class="form-group">
+      <input type="hidden" id="post_id" name="post_id" value="<%= @post.id %>">
+      <input type="hidden" id="parent_comment" name="parent_comment" value="">
+	  <input type="text" id="com_body" class='form-control' name="com_body" value="">
+    </div>
+    <button type="button" class="btn btn-primary send_comment">Додати</button>
+  <% end %>
+  <div class="comment_item hidden_comment" data-comment="">
+    <div class="comment_owner"></div>
+    <div class="comment_content"></div>
+    <div class="comment_user_actions">
+  	  <a class="comment_reply" href="javascript:void(0)">Відповісти</a>
+    </div>
+  </div>
+</div>
