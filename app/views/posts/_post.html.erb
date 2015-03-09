@@ -6,7 +6,7 @@
     <%= post.description %>
   </div>
   <div class="post_bottom_1 row">
-    <span class="rating_post"><strong>34343 тіпа рейтинг</strong></span>
+    <span class="rating_post"><strong><%= post_rating(post) %></strong></span>
     <span class="amount_comments"><strong><%= comments_notification(@comments_count ? @comments_count : post.comments.count)  %></strong></span>
       <span class="post_tags">
         <% post.tags.each do |tag|%>
@@ -15,8 +15,7 @@
       </span>
   </div>
   <div class="post_bottom_2">
-    <div class="glyphicon glyphicon-thumbs-up"></div>
-    <div class="glyphicon glyphicon-thumbs-down col-xs-offset-1"></div>
+    <%= display_plus_minus(post)%>
     <div class="glyphicon glyphicon-envelope col-xs-offset-1"></div>
     <div class="glyphicon glyphicon-plus col-xs-offset-5"></div>
   </div>

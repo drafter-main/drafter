@@ -1,4 +1,7 @@
 .post {
+  [data-active="false"] {
+    color: red;
+  }
   .post_title {
     font-size: 35px;
     a {

@@ -4,7 +4,13 @@ root :to => 'posts#index'
 resources :user_sessions
 resources :users
 
-resources :posts
+resources :posts do
+  collection do
+    put :up_vote, to: 'posts#up_vote'
+    put :down_vote, to: 'posts#down_vote'
+    put :neutral_vote, to: 'posts#neutral_vote'
+  end
+end
 resources :tags, only: [:index, :show]
 resources :comments
 
