@@ -11,8 +11,16 @@ resources :posts do
     put :neutral_vote, to: 'posts#neutral_vote'
   end
 end
+
 resources :tags, only: [:index, :show]
-resources :comments
+
+resources :comments do
+  collection do
+    put :up_vote, to: 'comments#up_vote'
+    put :down_vote, to: 'comments#down_vote'
+    put :neutral_vote, to: 'comments#neutral_vote'
+  end
+end
 
 post "oauth/callback" => "oauths#callback"
 get "oauth/callback" => "oauths#callback" # for use with Github, Facebook

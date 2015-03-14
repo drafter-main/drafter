@@ -16,9 +16,7 @@ Posts = function() {
               data: {post_id: post_id},
               url: "/posts/up_vote"
           });
-      } else {
-          neutral_vote(self);
-      }
+      } else neutral_vote(self);
   });
 
   $('.minus').on('click', function(){
@@ -32,38 +30,20 @@ Posts = function() {
               data: {post_id: post_id},
               url: "/posts/down_vote"
           })
-      } else {
-          neutral_vote(self);
-      }
+      } else neutral_vote(self);
   });
 
   function change_rating(self) {
     var rating_div = self.closest('.post').find('.rating_post strong'),
         rating_val = parseInt(rating_div.html());
     if (self.hasClass('glyphicon-thumbs-up')){
-        console.log('+');
-        if (self.next().attr('data-active') == 'false') {
-            rating_div.html(rating_val + 2);
-            console.log('rating +2');
-        } else if (self.attr('data-active') == 'true') {
-            rating_div.html(rating_val + 1);
-            console.log('rating +1');
-        } else {
-            rating_div.html(rating_val + -1);
-            console.log('rating -1');
-        }
+        if (self.next().attr('data-active') == 'false') rating_div.html(rating_val + 2);
+        else if (self.attr('data-active') == 'true') rating_div.html(rating_val + 1);
+        else rating_div.html(rating_val + -1);
     } else {
-        console.log('-');
-        if (self.prev().attr('data-active') == 'false') {
-            rating_div.html(rating_val - 2);
-            console.log('rating -2');
-        } else if (self.attr('data-active') == 'true') {
-            rating_div.html(rating_val - 1);
-            console.log('rating -1');
-        } else {
-            rating_div.html(rating_val + 1);
-            console.log('rating +1');
-        }
+        if (self.prev().attr('data-active') == 'false') rating_div.html(rating_val - 2);
+        else if (self.attr('data-active') == 'true') rating_div.html(rating_val - 1);
+        else rating_div.html(rating_val + 1);
     }
   }
 

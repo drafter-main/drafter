@@ -1,7 +1,11 @@
 <div class="comment_item" data-comment="<%= comment.id %>">
-  <div class="comment_owner"><%= comment.user.email %></div>
+  <div class="head_comment">
+    <span class="comment_owner"><%= comment.user.email %></span>
+    <span class="rating_comment"><%= item_rating(comment) %> points</span>
+  </div>
   <div class="comment_content"><%= comment.com_body %></div>
   <div class="comment_user_actions">
   	<a class="comment_reply" href="javascript:void(0)">Відповісти</a>
+    <%= display_plus_minus_comment(comment) %>
   </div>
 </div>
