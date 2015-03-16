@@ -22,6 +22,16 @@ resources :comments do
   end
 end
 
+resources :profiles, only: [] do
+  collection do
+    get :my_posts, to: 'profiles#my_posts'
+    get :my_comments, to: 'profiles#my_comments'
+    get :up_voted, to: 'profiles#up_voted'
+    get :settings, to: 'profiles#settings'
+    post :change_settings, to: 'profiles#change_settings'
+  end
+end
+
 post "oauth/callback" => "oauths#callback"
 get "oauth/callback" => "oauths#callback" # for use with Github, Facebook
 get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
