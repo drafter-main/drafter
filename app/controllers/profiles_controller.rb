@@ -14,11 +14,26 @@ class ProfilesController < ApplicationController
   end
 
   def settings
-
+    authentifications = @user.authentications
+    @fb = authentifications.where(provider: 'facebook')
+    @vk = authentifications.where(provider: 'vk')
   end
 
   def change_settings
     binding.pry
+  end
+
+  def social_net_ctrl
+    if params['remove'].present?
+      if params['remove'] == 'vk'
+        binding.pry
+        @user.authentications.where(provider: 'vk').first.destroy
+      else
+        @user.authentications.where(provider: 'facebook').first.destroy
+      end
+    end
+
+    redirect_to settings_profiles_path
   end
 
   private

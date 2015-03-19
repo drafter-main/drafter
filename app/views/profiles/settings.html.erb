@@ -1,13 +1,27 @@
 <div class="profile">
   <%= render 'profile_head'%>
-  <div class="change_password">
+  <div class="settings">
     <%= form_tag(change_settings_profiles_path, :class => 'form-horizontal') do %>
       <div class="form-group">
-        <label class="control-label col-xs-3" for="old-pass">Старий пароль:</label>
+        <label class="control-label col-xs-3" for="nickname">Нік:</label>
         <div class="col-xs-8">
-          <input type="password" class="form-control" id="old-pass" placeholder="Введіть старий пароль" name="old-pass">
+          <input type="text" class="form-control" id="nickname" placeholder="Введіть нік" name="nickname">
         </div>
       </div>
+      <div class="form-group">
+        <label class="control-label col-xs-3" for="email">Електронна пошта:</label>
+        <div class="col-xs-8">
+          <input type="email" class="form-control" id="email" placeholder="Введіть електронну пошту" name="email">
+        </div>
+      </div>
+      <% if @user.crypted_password%>
+          <div class="form-group">
+            <label class="control-label col-xs-3" for="old-pass">Старий пароль:</label>
+            <div class="col-xs-8">
+              <input type="password" class="form-control" id="old-pass" placeholder="Введіть старий пароль" name="old-pass">
+            </div>
+          </div>
+      <% end %>
       <div class="form-group">
         <label class="control-label col-xs-3" for="new-pass">Новий пароль:</label>
         <div class="col-xs-8">
@@ -26,5 +40,22 @@
         </div>
       </div>
     <% end %>
+    <div class="warning_soc_networks">
+        тіпа прогрес втратиться на старому аккаунті і тд...
+    </div>
+    <div class="connect_fb">
+      <% if @fb.empty? %>
+        <%= link_to "Під'єднати Facebook", auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
+      <% else %>
+        <%= link_to "Від'єднати Facebook", social_net_ctrl_profiles_path( remove: 'fb') %>
+      <% end %>
+    </div>
+    <div class="connect_vk">
+      <% if @vk.empty? %>
+        <%= link_to "Під'єднати VK", auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %> |
+    <% else %>
+        <%= link_to "Від'єднати VK", social_net_ctrl_profiles_path( remove: 'vk') %>
+      <% end %>
+    </div>
   </div>
 </div>
