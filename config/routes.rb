@@ -29,6 +29,7 @@ resources :profiles, only: [] do
     get :up_voted, to: 'profiles#up_voted'
     get :settings, to: 'profiles#settings'
     post :change_settings, to: 'profiles#change_settings'
+    post :change_password, to: 'profiles#change_password'
     get :social_net_ctrl, to: 'profiles#social_net_ctrl'
   end
 end

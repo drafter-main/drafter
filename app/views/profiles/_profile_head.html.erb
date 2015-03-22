@@ -3,8 +3,8 @@
     ava
   </div>
   <div class="text-center profile_info">
-    <div class="user_name"><%= @user.email%></div>
-    <div class="user_exists"><%= date_diff(@user.created_at)%> зареєстрований </div>
+    <div class="user_name"><%= @user.nick %></div>
+    <div class="user_exists"><%= date_diff(@user.created_at) %> зареєстрований </div>
     <div class="user_rating"><%= @user.rating %> рейтинг</div>
     <div class="user_activity">
       <span class="user_posts_q">постів <%= @user.posts.length %></span>
@@ -23,5 +23,9 @@
       <li role="presentation"><%= link_to 'Вподобані пости', up_voted_profiles_path %></li>
       <li role="presentation"><%= link_to 'Налаштування', settings_profiles_path %></li>
     </ul>
+  </div>
+  <div id="nav">
+    <p id="notice"><%= flash[:notice] %></p>
+    <p id="alert"><%= flash[:alert] %></p>
   </div>
 </div>
