@@ -6,8 +6,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    binding.pry
     if @user.save
+      auto_login(@user)
       redirect_to(root_url, notice: 'User was successfully created')
     else
       render :new

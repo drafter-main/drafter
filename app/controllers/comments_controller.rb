@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-
+  before_filter :check_if_admin, only: [:update]
   def create
     if params[:comment][:parent_comment].to_i > 0
       data = comment_params
@@ -39,6 +39,14 @@ class CommentsController < ApplicationController
       vote.destroy
     end
     render json: {success: true}
+  end
+
+  # only ban comment
+  def update
+    comment = Comment.find(params[:id])
+    comment.banned = true
+    comment.save
+    redirect_to(:back)
   end
  
 private

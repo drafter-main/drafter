@@ -75,7 +75,7 @@
           </div>
           <div class="connect_vk">
             <% if @vk.empty? %>
-                <%= link_to "Під'єднати VK", auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %> |
+                <%= link_to "Під'єднати VK", auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %>
             <% else %>
                 <%= link_to "Від'єднати VK", social_net_ctrl_profiles_path( remove: 'vk') %>
             <% end %>
