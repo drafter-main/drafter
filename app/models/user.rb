@@ -15,4 +15,13 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
 
   validates :email, uniqueness: true
+
+  after_create :set_nick
+
+  private
+
+  def set_nick
+    nick = email.split('@').first
+    update_column(:nick, nick)
+  end
 end

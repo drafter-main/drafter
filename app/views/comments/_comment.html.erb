@@ -2,7 +2,7 @@
   <div class="head_comment">
     <span class="comment_owner">
       <%= comment.user.email %>
-      <%= link_to "", comment, method: :put, class: "glyphicon glyphicon-trash" %>
+      <%= link_to "", comment, method: :put, class: "glyphicon glyphicon-trash" if is_admin?  %>
     </span>
     <span class="rating_comment"><%= item_rating(comment) %> points</span>
   </div>

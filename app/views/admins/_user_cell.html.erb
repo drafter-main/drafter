@@ -1,0 +1,10 @@
+<tr class=<%= define_user_class(user) %>>
+  <td><%= user.email%></td>
+  <td><%= user.nick%></td>
+  <td>
+    <%= form_tag(ban_user_admins_path, method: :put) do %>
+      <%= hidden_field_tag 'id', user.id %>
+      <%= ban_or_not_buttons(user)%>
+    <% end %>
+  </td>
+</tr>

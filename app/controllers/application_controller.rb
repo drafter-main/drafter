@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
   def set_constants
     @tags = ActsAsTaggableOn::Tag.most_used(10)
   end
+
+  def check_if_admin
+    redirect_to posts_path, alert: 'Заборонено' unless current_user && current_user.admin
+  end
 end

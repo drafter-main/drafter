@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :require_login, :except => [:index, :show]
+  before_filter :check_if_admin, only: [:destroy]
 
   def index
     @posts = Post.includes(:comments).all
@@ -49,12 +50,8 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if current_user.admin
-      post = Post.find(params[:id])
-      render action: :index if post.destroy
-    else
-      render action: :show
-    end
+    post = Post.find(params[:id])
+    render action: :index if post.destroy
   end
 
   private

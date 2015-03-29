@@ -1,7 +1,7 @@
 <div class="post">
   <div class="post_title">
     <%= link_to post.title, post %>
-    <% if current_user && current_user.admin %>
+    <% if is_admin? %>
       <%= link_to "", post, method: :delete, class: "glyphicon glyphicon-trash" %>
     <% end %>
   </div>
