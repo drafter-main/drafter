@@ -38,10 +38,10 @@
           <li>
             <%= link_to "Out", :logout, method: :post, class: "right_buttons" %>
           </li>
-        <% else %>
-          <li><a class="right_buttons" href="#">ff</a></li>
         <% end %>
-        <li><a class="right_buttons" href="#">ff</a></li>
+        <% if current_user && current_user.admin%>
+          <li><a class="right_buttons" href="<%= admin_path %>">admin</a></li>
+        <% end %>
       </ul>
   </div><!-- /.container-fluid -->
   <div class="bottom_line"></div>

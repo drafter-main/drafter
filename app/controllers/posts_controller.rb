@@ -48,6 +48,15 @@ class PostsController < ApplicationController
     render json: {success: true}
   end
 
+  def destroy
+    if current_user.admin
+      post = Post.find(params[:id])
+      render action: :index if post.destroy
+    else
+      render action: :show
+    end
+  end
+
   private
 
   def find_user_and_post

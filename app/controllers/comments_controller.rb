@@ -40,6 +40,18 @@ class CommentsController < ApplicationController
     end
     render json: {success: true}
   end
+
+  # only ban comment
+  def update
+    if current_user.admin
+      comment = Comment.find(params[:id])
+      comment.banned = true
+      comment.save
+      redirect_to(:back)
+    else
+      redirect_to(:back)
+    end
+  end
  
 private
 

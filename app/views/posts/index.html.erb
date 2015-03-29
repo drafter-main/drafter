@@ -3,4 +3,4 @@
   <p id="alert"><%= flash[:alert] %></p>
 </div>
 
-<div><%= render @posts %></div>
+<div><%= render @posts if @posts %></div>
