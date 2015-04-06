@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
 
   after_create :set_nick
 
+  before_create do
+    generate_short_code
+  end
+
   private
 
   def set_nick
