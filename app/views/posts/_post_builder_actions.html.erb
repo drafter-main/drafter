@@ -1,0 +1,23 @@
+<div id="post-builder-actions" class="col-xs-2">
+  <%= form_for @post do |f| %>
+    <%= f.hidden_field :title %>
+    <%= f.hidden_field :description %>
+    <%= f.hidden_field :content %>
+    <%= f.hidden_field :content_type %>
+    <%= f.hidden_field :published %>
+    <%= f.hidden_field :tag_list %>
+  <% end %>
+  <button type="button" id="create_post" class="col-xs-12 btn btn-success create-post-button">Створити</button>
+  <div class="post-type-buttons">
+	  <button type="button" id="hidden_post" class="btn btn-primary post-type-select">Опублікувати</button>
+	  <button type="button" id="visible_post" class="btn btn-primary post-type-select">Невидимий</button>
+  </div>
+  <div id="tags">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Теги</div>
+      <div class="panel-body"></div>
+    </div>
+    <input id="add_new_tag" class="form-control">
+    <button type="button" id="add_new_tag_submit" class="btn btn-primary post-type-select"><span class="glyphicon glyphicon-plus"></span></button>
+  </div>
+</div>

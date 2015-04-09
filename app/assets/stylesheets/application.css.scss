@@ -34,3 +34,13 @@
     }
   }
 }
+
+.col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-8, .col-xs-11, .col-xs-10, .col-xs-12 {
+  padding: 0;
+}
+
+#content_main {
+  width: 1070px;
+  max-width: 1070px;
+  margin: auto;
+}

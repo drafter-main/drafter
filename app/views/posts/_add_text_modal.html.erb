@@ -1,0 +1,57 @@
+<div id="add-text-modal" class="modal fade builder-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Додати текст</h4>
+            </div>
+            <div class="modal-body clearfix">
+              <form>
+                <div class="form-group add-text-fileld col-xs-3 col-md-3">
+                  <label for="text_font_size" class="form-control-static">Шрифт</label>
+                  <select id="text_font_size" class="drafter-select">
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="18">18</option>
+                    <option value="20">20</option>
+                    <option value="22">22</option>
+                    <option value="24">24</option>
+                    <option value="26">26</option>
+                    <option value="28">28</option>
+                    <option value="32">32</option>
+                    <option value="36">36</option>
+                    <option value="40">40</option>
+                    <option value="44">44</option>
+                    <option value="48">48</option>
+                  </select>
+                </div>
+                <div class="form-group add-text-fileld col-xs-4 col-md-4">
+                  <label for="add_text_color_parent" class="form-control-static">Колір тексту</label>
+                  <div id="add_text_color_parent" class="add-text-block color-container">
+                    <div id="add_text_color_selected" class="color-container-inner"></div>
+                  </div>
+                  <div id="add_text_color" class="add-text-block add-text-color-picker"></div>
+                </div>
+                <div class="form-group add-text-fileld col-xs-4 col-md-4">
+                  <label for="add_background_color_parent" class="form-control-static">Колір фону</label>
+                  <div id="add_background_color_parent" class="add-text-block color-container">
+                    <div id="add_background_color_selected" class="color-container-inner"></div>
+                  </div>
+                  <div id="add_background_color" class="add-text-block add-text-color-picker"></div>
+                </div>
+                <div class="form-group col-xs-12">
+                  <textarea class="form-control" id="text_editor"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-text-modal-submit" class="btn btn-primary">Додати</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,8 +8,8 @@
 </head>
 <body>
   <%= render 'menus/main'%>
-  <div class="main_body col-xs-7">
-    <%= yield %>
+  <div id="content_main"><%= yield %></div>
+<!--   <div class="main_body col-xs-7">
   </div>
   <div class="right_column col-xs-4">
     <div class="tags_popular row">
@@ -27,7 +27,7 @@
     <div class="banner row" style="margin-top: 30px;">
       Хуянер
     </div>
-  </div>
+  </div> -->
   <%= render 'modals/user_actions'%>
 </body>
 </html>
