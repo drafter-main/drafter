@@ -3,6 +3,7 @@ class Post < ActiveRecord::Base
   has_many :comments
 
   acts_as_taggable
+  acts_as_votable
 
-  validates :user_id, presence: true
+  validates_presence_of :user_id
 end

@@ -1,12 +1,15 @@
 <div class="post">
   <div class="post_title">
     <%= link_to post.title, post %>
+    <% if is_admin? %>
+      <%= link_to "", post, method: :delete, class: "glyphicon glyphicon-trash" %>
+    <% end %>
   </div>
   <div class="post_description">
     <%= post.description %>
   </div>
   <div class="post_bottom_1 row">
-    <span class="rating_post"><strong>34343 тіпа рейтинг</strong></span>
+    <span class="rating_post"><strong><%= item_rating(post) %> points </strong></span>
     <span class="amount_comments"><strong><%= comments_notification(@comments_count ? @comments_count : post.comments.count)  %></strong></span>
       <span class="post_tags">
         <% post.tags.each do |tag|%>
@@ -15,9 +18,12 @@
       </span>
   </div>
   <div class="post_bottom_2">
-    <div class="glyphicon glyphicon-thumbs-up"></div>
-    <div class="glyphicon glyphicon-thumbs-down col-xs-offset-1"></div>
-    <div class="glyphicon glyphicon-envelope col-xs-offset-1"></div>
-    <div class="glyphicon glyphicon-plus col-xs-offset-5"></div>
+    <%= display_plus_minus(post)%>
+    <div class="social-likes" data-title="Drafter">
+      <div class="facebook" title="Share link on Facebook">Facebook</div>
+      <div class="twitter" title="Share link on Twitter">Twitter</div>
+      <div class="plusone" title="Share link on Google+">Google+</div>
+      <div class="vkontakte" title="Share link on VK">VK</div>
+    </div>
   </div>
 </div>

@@ -14,10 +14,16 @@
   }
   .comment_owner {
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
     color: #000;
   }
   .comment_reply {
     color: #999;
+  }
+  [data-active="false"] {
+    color: red;
+  }
+  .plus-comment, .minus-comment {
+    margin-left: 5px;
   }
 }

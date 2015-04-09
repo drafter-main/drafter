@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     if @user.save
       folder = make_user_dir(@user.id)
       @user.update_attribute(:folder, folder)
+      auto_login(@user)
       redirect_to(root_url, notice: 'User was successfully created')
     else
       render :new

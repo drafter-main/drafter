@@ -1,0 +1,10 @@
+<table class="table table-hover">
+  <tr>
+    <th>Емейл</th>
+    <th>Нік</th>
+    <th>Забанити</th>
+  </tr>
+  <% @users.each do |user|%>
+    <%= render partial: "user_cell", locals: {user: user} %>
+  <% end %>
+</table>
