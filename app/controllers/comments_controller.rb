@@ -1,17 +1,19 @@
 class CommentsController < ApplicationController
   before_filter :check_if_admin, only: [:update]
   def create
-    if params[:comment][:parent_comment].to_i > 0
-      data = comment_params
-      data[:user_id] = current_user.id
-      parent = Comment.find_by_id(params[:comment].delete(:parent_comment))
+    owner = current_user
+    data = comment_params
+    data[:user_id] = owner.id
+    data[:public_name] = Digest::MD5.hexdigest(data[:user_id].to_s + Time.now.to_s)
+    if params[:comment][:parent_comment].length > 0
+      parent = Comment.find_by(public_name: params[:comment].delete(:parent_comment))
       @comment = parent.children.build(data)
 	  else
-	    @comment = current_user.comments.new(comment_params)
+	    @comment = Comment.new(data)
     end
 
     if @comment.save
-      render json: {success: true, id: @comment.id, email: current_user.email }
+      render json: {success: true, public_name: @comment.public_name, email: owner.email }
     else
       render json: {success: false}
     end
