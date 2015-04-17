@@ -56,7 +56,7 @@ Comments.Comment = function() {
 
   function build_block(response, data) {
     var block = $("#add_new_comment").find(".comment_item").clone();
-    block.attr('data-comment', response.id);
+    block.attr('data-comment', response.public_name);
     block.find(".comment_owner").html(response.email);
     block.find(".comment_content").html(data.com_body);
     block.show();
