@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406205504) do
+ActiveRecord::Schema.define(version: 20150418141246) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -42,12 +42,15 @@ ActiveRecord::Schema.define(version: 20150406205504) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.string   "title",       limit: 255
-    t.string   "description", limit: 255
+    t.integer  "user_id",      limit: 4
+    t.string   "title",        limit: 255
+    t.string   "description",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "code",        limit: 255
+    t.string   "code",         limit: 255
+    t.string   "content",      limit: 255
+    t.string   "content_type", limit: 255
+    t.boolean  "published",    limit: 1
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -81,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150406205504) do
     t.boolean  "admin",            limit: 1,   default: false
     t.string   "code",             limit: 255
     t.date     "banned_to",                    default: '2015-04-06'
+    t.string   "folder",           limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

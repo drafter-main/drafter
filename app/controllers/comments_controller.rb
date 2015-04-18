@@ -6,16 +6,15 @@ class CommentsController < ApplicationController
     owner = current_user
     data = comment_params
     data[:user_id] = owner.id
-    data[:public_name] = Digest::MD5.hexdigest(data[:user_id].to_s + Time.now.to_s)
     if params[:comment][:parent_comment].length > 0
-      parent = Comment.find_by(public_name: params[:comment].delete(:parent_comment))
+      parent = Comment.find_by(code: params[:comment][:parent_comment])
       @comment = parent.children.build(data)
 	  else
 	    @comment = Comment.new(data)
     end
 
     if @comment.save
-      render json: {success: true, public_name: @comment.public_name, email: owner.email }
+      render json: {success: true, code: @comment.code, nick: owner.nick }
     else
       render json: {success: false}
     end

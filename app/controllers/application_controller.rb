@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def banned?
-    if current_user && current_user.banned_to < Time.now
+    if current_user && current_user.banned_to > Time.now
       flash[:alert] = "Вас забанили до #{current_user.banned_to.strftime('%d/%m/%Y')}"
       redirect_to root_path
     end
