@@ -14,4 +14,11 @@ class ApplicationController < ActionController::Base
   def check_if_admin
     redirect_to posts_path, alert: 'Заборонено' unless current_user && current_user.admin
   end
+
+  def banned?
+    if current_user && current_user.banned_to < Time.now
+      flash[:alert] = "Вас забанили до #{current_user.banned_to.strftime('%d/%m/%Y')}"
+      redirect_to root_path
+    end
+  end
 end

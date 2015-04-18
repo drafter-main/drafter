@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   before_filter :check_if_admin, only: [:update]
+  before_filter :banned?
+
   def create
     if params[:comment][:parent_comment].to_i > 0
       data = comment_params
