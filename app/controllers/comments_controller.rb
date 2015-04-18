@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_filter :check_if_admin, only: [:update]
+  before_filter :require_login
   before_filter :banned?
 
   def create
