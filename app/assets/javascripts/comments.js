@@ -20,7 +20,7 @@ Comments.Comment = function() {
       com_body: form.find("#com_body").val(),
       post_id: form.find("#post_id").val(),
       parent_comment: form.find("#parent_comment").val()
-    }
+    };
     button_loading.start(button);
     $.ajax({
       type: "post",
