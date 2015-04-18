@@ -10,4 +10,8 @@ class Post < Base
   before_create do
     generate_short_code
   end
+
+  def to_param
+    code
+  end
 end

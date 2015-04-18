@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by_code(params[:id])
     @comments = Comment.includes(:user).where(post_id: @post.id).hash_tree
     @comments_count = comments_count(@comments)
   end
