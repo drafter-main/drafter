@@ -64,7 +64,7 @@ class PostsController < ApplicationController
 
   def find_user_and_post
     @user = current_user
-    @post = Post.find_by_id(params[:post_id])
+    @post = Post.find_by_code(params[:code])
   end
 
   def update_user_rating_neutral_vote
