@@ -56,7 +56,7 @@ private
 
   def find_user_and_comment
     @user = current_user
-    @comment = Comment.find_by_id(params[:comment_id])
+    @comment = Comment.find_by_code(params[:code])
   end
 
   def update_user_rating_neutral_vote

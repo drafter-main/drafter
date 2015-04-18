@@ -14,21 +14,21 @@ module CommentsHelper
     if current_user
       case current_user.voted_as_when_voted_for(item)
         when true
-          str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='false' data=#{item.id}></div>
-                <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=#{item.id}></div>"
+          str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='false' data=#{item.code}></div>
+                <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=#{item.code}></div>"
           str.html_safe
         when false
-          str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=#{item.id}></div>
-                <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='false' data=#{item.id}></div>"
+          str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=#{item.code}></div>
+                <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='false' data=#{item.code}></div>"
           str.html_safe
         when nil
-          str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=#{item.id}></div>
-                <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=#{item.id}></div>"
+          str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=#{item.code}></div>
+                <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=#{item.code}></div>"
           str.html_safe
       end
     else
-      str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=#{item.id}></div>
-            <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=#{item.id}></div>"
+      str = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=#{item.code}></div>
+            <div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=#{item.code}></div>"
       str.html_safe
     end
   end

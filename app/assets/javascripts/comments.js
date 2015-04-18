@@ -85,10 +85,10 @@ Comments.Comment = function() {
         change_rating(self);
         if (self.attr('data-active') == 'true'){
             update_class_up_vote(self);
-            comment_id = self.attr('data');
+            code = self.attr('data');
             $.ajax({
                 type: 'Put',
-                data: {comment_id: comment_id},
+                data: {code: code},
                 url: "/comments/up_vote"
             });
         } else neutral_vote(self);
@@ -99,10 +99,10 @@ Comments.Comment = function() {
         change_rating(self);
         if (self.attr('data-active') == 'true') {
             update_class_down_vote(self);
-            comment_id = self.attr('data');
+            code = self.attr('data');
             $.ajax({
                 type: 'Put',
-                data: {comment_id: comment_id},
+                data: {code: code},
                 url: "/comments/down_vote"
             })
         } else neutral_vote(self);
@@ -124,10 +124,10 @@ Comments.Comment = function() {
 
     function neutral_vote(el) {
         update_class_neutral_vote(el);
-        comment_id = el.attr('data');
+        code = el.attr('data');
         $.ajax({
             type: 'Put',
-            data: {comment_id: comment_id},
+            data: {code: code},
             url: "/comments/neutral_vote"
         });
     }
