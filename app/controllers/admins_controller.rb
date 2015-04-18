@@ -7,7 +7,8 @@ before_filter :check_user, only: :ban_user
 
   # банити чи розбанити юзера
   def ban_user
-    @user.banned ? @user.update_column(:banned, false) : @user.update_column(:banned, true )
+    ban_time = Time.now + params['period'].to_i.days
+    @user.banned_to > Time.now ? @user.update_column(:banned_to, Time.now) : @user.update_column(:banned_to, ban_time )
     flash[:alert] = 'Операція пройшла успішно'
     redirect_to users_admins_path
   end

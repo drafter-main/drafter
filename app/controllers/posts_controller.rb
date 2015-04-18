@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_filter :require_login, :except => [:index, :show]
+  before_filter :banned?, except: [:index, :show]
   before_filter :check_if_admin, only: [:destroy]
 
   def index

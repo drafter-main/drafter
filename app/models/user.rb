@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < Base
   authenticates_with_sorcery! do |config|
     config.authentications_class = Authentication
   end
@@ -17,8 +17,20 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
 
   after_create :set_nick
+  after_create :make_user_dir
+
+  before_create do
+    generate_short_code
+  end
 
   private
+
+  def make_user_dir
+    users_root =  Rails.root.join("public/content/")
+    folder = Digest::MD5.hexdigest(id.to_s + Time.now.to_s)
+    Dir.mkdir(users_root + folder)
+    update_attribute(:folder, folder)
+  end
 
   def set_nick
     nick = email.split('@').first

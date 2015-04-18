@@ -1,7 +1,7 @@
-<div class="comment_item" data-comment="<%= comment.public_name %>">
+<div class="comment_item" data-comment="<%= comment.code %>">
   <div class="head_comment">
     <span class="comment_owner">
-      <%= comment.user.email %>
+      <%= comment.user.nick %>
       <%= link_to "", comment, method: :put, class: "glyphicon glyphicon-trash" if is_admin?  %>
     </span>
     <span class="rating_comment"><%= item_rating(comment) %> points</span>
