@@ -6,23 +6,23 @@ gem 'rails', '4.2'
 gem 'mysql2'
 gem 'sorcery'
 
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass', '~> 3.3.4'
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails', '~> 5.0.3'
 # comments
 gem 'closure_tree', '~> 5.0.0'
 # tags for posts
 gem 'acts-as-taggable-on', '~> 3.4'
+
 # rating
 gem 'acts_as_votable', '~> 0.10.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem 'time_diff', '~> 0.3.0'
 

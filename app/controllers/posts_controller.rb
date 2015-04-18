@@ -18,7 +18,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.create(post_params)
+    user = current_user
+    data = post_params
+    data[:published] = to_boolean(data[:published])
+    data[:content]= save_post_image(data[:content], user.folder)
+    @post = user.posts.new(data)
+
     if @post.save
       redirect_to(root_url, notice: 'Post was successfully created')
     else
@@ -105,8 +110,18 @@ class PostsController < ApplicationController
 	  redirect_to root_url, alert: "Please login first"
   end
 
+  def save_post_image(image, folder)
+    users_root =  Rails.root.join("public/content/" + folder + "/")
+    name = Digest::MD5.hexdigest(folder + Time.now.to_s) + ".png"
+    image_data = Base64.decode64(image['data:image/png;base64,'.length .. -1])
+    File.open(users_root + name, 'wb') do|f|
+      f.write image_data
+    end
+    name
+  end
+
   def post_params
-    params.require(:post).permit(:title, :description, :tag_list)
+    params.require(:post).permit(:title, :description, :content, :content_type, :tag_list, :published)
   end
 
   def comments_count(comments)
@@ -119,4 +134,9 @@ class PostsController < ApplicationController
     end
     count
   end
+
+  def to_boolean(value)
+    value == "true"
+  end
+
 end
