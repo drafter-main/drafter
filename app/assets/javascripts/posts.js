@@ -10,10 +10,10 @@ Posts = function() {
       change_rating(self);
       if (self.attr('data-active') == 'true'){
           update_class_up_vote(self);
-          post_id = self.attr('data');
+          code = self.attr('data');
           $.ajax({
               type: 'Put',
-              data: {post_id: post_id},
+              data: {code: code},
               url: "/posts/up_vote"
           });
       } else neutral_vote(self);
@@ -24,10 +24,10 @@ Posts = function() {
       change_rating(self);
       if (self.attr('data-active') == 'true') {
           update_class_down_vote(self);
-          post_id = self.attr('data');
+          code = self.attr('data');
           $.ajax({
               type: 'Put',
-              data: {post_id: post_id},
+              data: {code: code},
               url: "/posts/down_vote"
           })
       } else neutral_vote(self);
@@ -49,10 +49,10 @@ Posts = function() {
 
   function neutral_vote(el) {
       update_class_neutral_vote(el);
-      post_id = el.attr('data');
+      code = el.attr('data');
       $.ajax({
           type: 'Put',
-          data: {post_id: post_id},
+          data: {code: code},
           url: "/posts/neutral_vote"
       });
   }

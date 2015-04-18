@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by_code(params[:id])
     @comments = Comment.includes(:user).where(post_id: @post.id).hash_tree
     @comments_count = comments_count(@comments)
   end
@@ -64,7 +64,7 @@ class PostsController < ApplicationController
 
   def find_user_and_post
     @user = current_user
-    @post = Post.find_by_id(params[:post_id])
+    @post = Post.find_by_code(params[:code])
   end
 
   def update_user_rating_neutral_vote
