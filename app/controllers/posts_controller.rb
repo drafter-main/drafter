@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_filter :check_if_admin, only: [:destroy]
 
   def index
-    @posts = Post.includes(:comments).all
+    @posts = Post.includes(:comments).where(published: true)
   end
 
   def show
@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     user = current_user
     data = post_params
     data[:published] = to_boolean(data[:published])
-    data[:content]= save_post_image(data[:content], user.folder)
+    data[:content]= save_post_image(data[:content], user.folder) if data[:content_type] == "image"
     @post = user.posts.new(data)
 
     if @post.save
@@ -117,7 +117,7 @@ class PostsController < ApplicationController
     File.open(users_root + name, 'wb') do|f|
       f.write image_data
     end
-    name
+    folder + "/" + name
   end
 
   def post_params

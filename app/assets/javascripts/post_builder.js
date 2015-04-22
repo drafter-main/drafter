@@ -21,8 +21,8 @@ var PostBuilder = function(){
   this.post_description = "";
   this.post_content = "";
   this.post_type = "";
+  this.post_published = true;
 
-  this.send_image = true;
   this.add_new_object = function(type){ create_new_object(type) };
   this.modify_alert = function() { alert("aaaaaaa") };
 
@@ -58,17 +58,21 @@ var PostBuilder = function(){
 };
 
 PostBuilder.ImageUploadFromPC = function(PostBuilder) {
+  var disable = "#video_net, #move_element_to_bottom, #move_element_to_top, #move_element, #move_stop, #text_edit, #text_add, #image_net, #image_pc";
   this.uploaded_from_pc = false;
-
+  
   function readURL(input) {
     if (input.files && input.files[0]) {
+      if (input.files[0].type == "image/gif" && $("#builder-canvas .added-object").length) return; // need to refactor
       var reader = new FileReader();
       reader.onload = function (e) {
         $('#clear-objects .picture-element').attr('src', e.target.result);
         PostBuilder.add_new_object("image-object");
-        PostBuilder.disable_actions("#video_net");
+        PostBuilder.post_type = "image";
+        if (input.files[0].type == "image/gif") PostBuilder.disable_actions(disable);
+        else PostBuilder.disable_actions("#video_net");
       }
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(input.files[0]); 
     }
   }
 
@@ -83,7 +87,8 @@ PostBuilder.ImageUploadFromPC = function(PostBuilder) {
 
 PostBuilder.ImageUploadFromUrl = function(PostBuilder) {
   var $AddFromUrlModal = $("#add-from-url-modal")
-      $url_element = $AddFromUrlModal.find("#image-url-field");
+      $url_element = $AddFromUrlModal.find("#image-url-field"),
+      disable = "#video_net, #move_element_to_bottom, #move_element_to_top, #move_element, #move_stop, #text_edit, #text_add, #image_net, #image_pc";
 
   $(document).on("click", "#image_net:not(.disabled-elements)", function(){
   	$url_element.val("");
@@ -92,10 +97,13 @@ PostBuilder.ImageUploadFromUrl = function(PostBuilder) {
 
   $(document).on("click", "#image-url-field-submit", function(){
     if ($url_element.val() != "") {
+      if ($url_element.val().match(/\.(gif)$/) != null && $("#builder-canvas .added-object").length) return;
       $('#clear-objects .picture-element').attr('src', $url_element.val());
       $AddFromUrlModal.modal("hide");
       PostBuilder.add_new_object("image-object");
-      PostBuilder.disable_actions("#video_net");
+      PostBuilder.post_type = "image";
+      if ($url_element.val().match(/\.(gif)$/) != null) PostBuilder.disable_actions(disable);
+      else PostBuilder.disable_actions("#video_net");
     }
   });
 };
@@ -321,6 +329,7 @@ PostBuilder.AddText = function(PostBuilder) {
       if ($selected) edit_existing_block();
       else add_new_text_block();
       PostBuilder.enable_actions("#text_edit");
+      PostBuilder.post_type = "image";
     }
   });
 
@@ -385,6 +394,7 @@ PostBuilder.AddVideo = function(PostBuilder) {
 	    $AddVideoModal.modal("hide");
 	    PostBuilder.add_new_object("video-object");
       PostBuilder.disable_actions(disable);
+      PostBuilder.post_type = "video";
     }
   });
 
@@ -477,6 +487,7 @@ PostBuilder.DeleteItems = function(PostBuilder) {
     if (elements < 1) {
       PostBuilder.disable_actions("#delete_element"); 
       PostBuilder.enable_actions("#image_pc, #image_net, #text_add, #video_net");
+      PostBuilder.post_type = "";
     }
     else PostBuilder.enable_actions("#delete_element");
     if (elements < 2) PostBuilder.disable_actions("#move_stop, #move_element_to_top, #move_element_to_bottom, #move_element");
@@ -516,7 +527,6 @@ PostBuilder.DeleteItems = function(PostBuilder) {
 };
 
 PostBuilder.Tags = function(PostBuilder) {
-
   function add_new_tag_label() {
     var label = "<div class='tag-label' data-tag='" + $("#add_new_tag").val() + "'>" +
                 $("#add_new_tag").val() +
@@ -537,6 +547,20 @@ PostBuilder.Tags = function(PostBuilder) {
 
 PostBuilder.CreatePost = function(PostBuilder) {
 
+  function set_pablished_value(selected, disabled, value) {
+    selected.addClass("select-post-visible-button");
+    disabled.removeClass("select-post-visible-button");
+    PostBuilder.post_published = value;
+  }
+
+  $(document).on("click", "#hidden_post", function() {
+    set_pablished_value($(this), $("#visible_post"), false);
+  });
+
+  $(document).on("click", "#visible_post", function() {
+    set_pablished_value($(this), $("#hidden_post"), true);
+  });
+
   function collect_tags() {
     var labels = $("#tags .panel-body").find(".tag-label"),
         result = [];
@@ -546,30 +570,33 @@ PostBuilder.CreatePost = function(PostBuilder) {
     return result.join(", ");
   }
 
-  function set_post_content() {
-    html2canvas(document.getElementById("builder-canvas"), {
-      onrendered: function(canvas) {
-        PostBuilder.post_content = canvas.toDataURL();
-      },
-    });
+  function get_content() {
+    if (PostBuilder.post_type === "image") return 
   }
 
   $("#create_post").click(function() {
     button_loading.start($(this));
-    html2canvas(document.getElementById("builder-canvas"), {
-      onrendered: function(canvas) {
-        PostBuilder.post_content = canvas.toDataURL('image/png');
-        $("#new_post").find("#post_title").val(PostBuilder.post_title);
-        $("#new_post").find("#post_description").val(PostBuilder.post_description);
-        $("#new_post").find("#post_content").val(PostBuilder.post_content);
-        $("#new_post").find("#post_content_type").val("image");
-        $("#new_post").find("#post_published").val("true");
-        $("#new_post").find("#post_tag_list").val(collect_tags());
-        $("#new_post").submit();
-      },
-      width: 600
-    });
+    $("#new_post").find("#post_title").val(PostBuilder.post_title);
+    $("#new_post").find("#post_description").val(PostBuilder.post_description);
+    $("#new_post").find("#post_content_type").val(PostBuilder.post_type);
+    $("#new_post").find("#post_published").val(PostBuilder.post_published);
+    $("#new_post").find("#post_tag_list").val(collect_tags());
+    if (PostBuilder.post_type === "image") {
+      html2canvas(document.getElementById("builder-canvas"), {
+        onrendered: function(canvas) {
+          PostBuilder.post_content = canvas.toDataURL('image/png');
+          $("#new_post").find("#post_content").val(PostBuilder.post_content);
+          $("#new_post").submit();
+        },
+        width: 600
+      });
+    } else {
+      PostBuilder.post_content = $("#builder-canvas").find(".video-element").attr("src");
+      $("#new_post").find("#post_content").val(PostBuilder.post_content);
+      $("#new_post").submit();
+    }
   });
 
 };
 //http://img.hc360.com/auto/info/images/200709/906-zhuchi13sdgdf.jpg
+// http://s1.developerslife.ru/public/images/gifs/19b66bb3-01aa-4429-8c5c-12ab5ed5ec2f.gif
