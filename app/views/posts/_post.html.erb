@@ -8,6 +8,14 @@
   <div class="post_description">
     <%= post.description %>
   </div>
+  <div class="post_content">
+    <% if post.content_type == "image" %>
+      <img class="post_image_view" src="<%= image_type_path(post.content) %>"/>
+    <% else %>
+      <iframe class="post_video_view" width="600" height="350" src="<%= post.content %>" frameborder="0"></iframe>
+    <% end %>
+  </div>
+
   <div class="post_bottom_1 row">
     <span class="rating_post"><strong><%= item_rating(post) %> points </strong></span>
     <span class="amount_comments"><strong><%= comments_notification(@comments_count ? @comments_count : post.comments.count)  %></strong></span>

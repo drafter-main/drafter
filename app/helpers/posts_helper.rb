@@ -27,4 +27,8 @@ module PostsHelper
       str.html_safe
     end
   end
+
+  def image_type_path(content)
+    Rails.public_path + '/content/' + content
+  end
 end
