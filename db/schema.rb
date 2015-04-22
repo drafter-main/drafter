@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418141246) do
+ActiveRecord::Schema.define(version: 20150422191606) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -74,20 +74,24 @@ ActiveRecord::Schema.define(version: 20150418141246) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",            limit: 255
-    t.string   "crypted_password", limit: 255
-    t.string   "salt",             limit: 255
+    t.string   "email",               limit: 255
+    t.string   "crypted_password",    limit: 255
+    t.string   "salt",                limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating",           limit: 4,   default: 0
-    t.string   "nick",             limit: 255
-    t.boolean  "admin",            limit: 1,   default: false
-    t.string   "code",             limit: 255
-    t.date     "banned_to",                    default: '2015-04-06'
-    t.string   "folder",           limit: 255
+    t.integer  "rating",              limit: 4,   default: 0
+    t.string   "nick",                limit: 255
+    t.boolean  "admin",               limit: 1,   default: false
+    t.string   "code",                limit: 255
+    t.date     "banned_to",                       default: '2015-04-06'
+    t.string   "folder",              limit: 255
+    t.integer  "failed_logins_count", limit: 4,   default: 0
+    t.datetime "lock_expires_at"
+    t.string   "unlock_token",        limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "votable_id",   limit: 4
