@@ -6,6 +6,8 @@ resources :users
 
 resources :posts do
   collection do
+    get :best, to: 'posts#best'
+    get :most_recent, to: 'posts#most_recent'
     put :up_vote, to: 'posts#up_vote'
     put :down_vote, to: 'posts#down_vote'
     put :neutral_vote, to: 'posts#neutral_vote'

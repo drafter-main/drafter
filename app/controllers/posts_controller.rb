@@ -8,6 +8,16 @@ class PostsController < ApplicationController
     @posts = Post.includes(:comments).where(published: true)
   end
 
+  def best
+    @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
+    render 'posts/index'
+  end
+
+  def most_recent
+    @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
+    render 'posts/index'
+  end
+
   def show
     @post = Post.find_by_code(params[:id])
     @comments = Comment.includes(:user).where(post_id: @post.id).hash_tree
@@ -20,6 +30,10 @@ class PostsController < ApplicationController
 
   def create
     user = current_user
+    if user.comments.where('created_at > ?', Time.now - 1.day).length > 60
+      render json: {success: false, message: 'Перевищений ліміт'}
+    end
+
     data = post_params
     data[:published] = to_boolean(data[:published])
     data[:content]= save_post_image(data[:content], user.folder) if data[:content_type] == "image"

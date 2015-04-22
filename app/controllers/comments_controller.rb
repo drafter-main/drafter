@@ -6,6 +6,11 @@ class CommentsController < ApplicationController
 
   def create
     owner = current_user
+    
+    if owner.comments.where('created_at > ?', Time.now - 1.day).length > 60
+      render json: {success: false, message: 'Перевищений ліміт'}
+    end
+
     data = comment_params
     data[:user_id] = owner.id
     if params[:comment][:parent_comment].length > 0
