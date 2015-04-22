@@ -4,32 +4,56 @@ $(document).on('ready page:load', function () {
 
 Posts = function() {
   init_key_con;
+  var $LoginModal = $("#user_actions_modal");
+
+  function show_login_modal_if_error() {
+    if ($LoginModal.length) {
+      $LoginModal.find(".modal-title").html("Щоб виконати дію, потрібно увійти");
+      $LoginModal.modal("show");
+    }
+  }
 
   $('.plus').on('click', function(){
+      if ($("#active_user").length && $("#active_user").val() == "false") {
+        show_login_modal_if_error();
+        return false;
+      } 
       self = $(this);
-      change_rating(self);
       if (self.attr('data-active') == 'true'){
-          update_class_up_vote(self);
-          code = self.attr('data');
-          $.ajax({
-              type: 'Put',
-              data: {code: code},
-              url: "/posts/up_vote"
-          });
+        code = self.attr('data');
+        $.ajax({
+          type: 'Put',
+          data: {code: code},
+          url: "/posts/up_vote",
+          success: function(response) {
+            if (response && response.success) {
+              change_rating(self);
+              update_class_up_vote(self);
+            } else show_login_modal_if_error();
+          }
+        });
       } else neutral_vote(self);
   });
 
   $('.minus').on('click', function(){
+      if ($("#active_user").length && $("#active_user").val() == "false") {
+        show_login_modal_if_error();
+        return false;
+      } 
       self = $(this);
-      change_rating(self);
       if (self.attr('data-active') == 'true') {
-          update_class_down_vote(self);
-          code = self.attr('data');
-          $.ajax({
-              type: 'Put',
-              data: {code: code},
-              url: "/posts/down_vote"
-          })
+        code = self.attr('data');
+        $.ajax({
+          type: 'Put',
+          data: {code: code},
+          url: "/posts/down_vote",
+          success: function(response) {
+            if (response && response.success) {
+              change_rating(self);
+              update_class_down_vote(self);
+            } else show_login_modal_if_error();
+          }
+        })
       } else neutral_vote(self);
   });
 
@@ -48,13 +72,21 @@ Posts = function() {
   }
 
   function neutral_vote(el) {
-      update_class_neutral_vote(el);
-      code = el.attr('data');
-      $.ajax({
-          type: 'Put',
-          data: {code: code},
-          url: "/posts/neutral_vote"
-      });
+    if ($("#active_user").length && $("#active_user").val() == "false") {
+      show_login_modal_if_error();
+      return false;
+    } 
+    code = el.attr('data');
+    $.ajax({
+      type: 'Put',
+      data: {code: code},
+      url: "/posts/neutral_vote",
+      success: function(response) {
+        if (response && response.success) {
+          update_class_neutral_vote(el);
+        } else show_login_modal_if_error();
+      }
+    });
   }
 
   function update_class_neutral_vote(el) {
