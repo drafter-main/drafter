@@ -5,6 +5,14 @@ $(document).on('ready page:load', function() {
 var Comments = {};
 
 Comments.Comment = function() {
+  var $LoginModal = $("#user_actions_modal");
+
+  function show_login_modal_if_error() {
+    if ($LoginModal.length) {
+      $LoginModal.find(".modal-title").html("Щоб виконати дію, потрібно увійти");
+      $LoginModal.modal("show");
+    }
+  }
 
   $(document).on('click', '.send_comment', function(e){
     e.preventDefault();
@@ -16,6 +24,10 @@ Comments.Comment = function() {
   });
 
   function send_comment(form, button, reply) {
+    if ($("#active_user").length && $("#active_user").val() == "false") {
+      show_login_modal_if_error();
+      return false;
+    }
     var data = {
       com_body: form.find("#com_body").val(),
       post_id: form.find("#post_id").val(),
@@ -35,7 +47,10 @@ Comments.Comment = function() {
         if (response && response.success) {
           if (reply) replace_form_to_block(reply, response, data);
           else add_first_level_block(response, data);
-        } else if (reply) delete_reply_form(reply);
+        } else {
+          if (reply) delete_reply_form(reply);
+          show_login_modal_if_error();
+        }
       }
     });
   }
@@ -81,30 +96,46 @@ Comments.Comment = function() {
 
 
     $('.plus-comment').on('click', function(){
+        if ($("#active_user").length && $("#active_user").val() == "false") {
+          show_login_modal_if_error();
+          return false;
+        } 
         self = $(this);
-        change_rating(self);
-        if (self.attr('data-active') == 'true'){
-            update_class_up_vote(self);
-            code = self.attr('data');
-            $.ajax({
-                type: 'Put',
-                data: {code: code},
-                url: "/comments/up_vote"
-            });
+        if (self.attr('data-active') == 'true') {
+          code = self.attr('data');
+          $.ajax({
+            type: 'Put',
+            data: {code: code},
+            url: "/comments/up_vote",
+            success: function(response) {
+              if (response && response.success) {
+                change_rating(self);
+                update_class_up_vote(self);
+              } else show_login_modal_if_error();
+            }
+          });
         } else neutral_vote(self);
     });
 
     $('.minus-comment').on('click', function(){
+        if ($("#active_user").length && $("#active_user").val() == "false") {
+          show_login_modal_if_error();
+          return false;
+        } 
         self = $(this);
-        change_rating(self);
         if (self.attr('data-active') == 'true') {
-            update_class_down_vote(self);
-            code = self.attr('data');
-            $.ajax({
-                type: 'Put',
-                data: {code: code},
-                url: "/comments/down_vote"
-            })
+          code = self.attr('data');
+          $.ajax({
+            type: 'Put',
+            data: {code: code},
+            url: "/comments/down_vote",
+            success: function(response) {
+              if (response && response.success) {
+                change_rating(self);
+                update_class_down_vote(self);
+              } else show_login_modal_if_error();
+            }
+          });
         } else neutral_vote(self);
     });
 
@@ -123,13 +154,21 @@ Comments.Comment = function() {
     }
 
     function neutral_vote(el) {
-        update_class_neutral_vote(el);
-        code = el.attr('data');
-        $.ajax({
-            type: 'Put',
-            data: {code: code},
-            url: "/comments/neutral_vote"
-        });
+      if ($("#active_user").length && $("#active_user").val() == "false") {
+        show_login_modal_if_error();
+        return false;
+      } 
+      code = el.attr('data');
+      $.ajax({
+        type: 'Put',
+        data: {code: code},
+        url: "/comments/neutral_vote",
+        success: function(response) {
+          if (response && response.success) {
+            update_class_neutral_vote(el);
+          } else show_login_modal_if_error();
+        }
+      });
     }
 
     function update_class_neutral_vote(el) {

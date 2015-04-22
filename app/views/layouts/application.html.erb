@@ -9,7 +9,10 @@
 </head>
 <body>
   <%= render 'menus/main'%>
-  <div id="content_main"><%= yield %></div>
+  <div id="content_main">
+    <input type="hidden" id="active_user" value="<%= current_user ? true : false %>">
+    <%= yield %>
+  </div>
 <!--   <div class="main_body col-xs-7">
   </div>
   <div class="right_column col-xs-4">

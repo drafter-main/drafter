@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_filter :check_if_admin, only: [:update]
-  before_filter :require_login
+  before_filter :failed_response, only: [:create, :up_vote, :down_vote, :neutral_vote]
+  before_filter :require_login, only: [:update]
   before_filter :banned?
 
   def create
@@ -101,6 +102,10 @@ private
  
   def comment_params
     params.require(:comment).permit(:post_id, :com_body)
+  end
+
+  def failed_response
+    render json: { success: false } unless current_user
   end
 
 end

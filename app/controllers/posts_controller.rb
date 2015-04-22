@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_filter :failed_response, only: [:up_vote, :down_vote, :neutral_vote]
   before_filter :require_login, :except => [:index, :show]
   before_filter :banned?, except: [:index, :show]
   before_filter :check_if_admin, only: [:destroy]
@@ -137,6 +138,10 @@ class PostsController < ApplicationController
 
   def to_boolean(value)
     value == "true"
+  end
+
+  def failed_response
+    render json: { success: false } unless current_user
   end
 
 end
