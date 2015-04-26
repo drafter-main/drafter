@@ -2,7 +2,13 @@ Rails.application.routes.draw do
 
 root :to => 'posts#index'
 resources :user_sessions
-resources :users
+resources :users do
+  member do
+    get :user_posts, to: 'users#user_posts'
+    get :user_comments, to: 'users#user_comments'
+    get :user_likes, to: 'users#user_likes'
+  end
+end
 
 resources :posts do
   collection do

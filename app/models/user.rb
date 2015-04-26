@@ -23,6 +23,10 @@ class User < Base
     generate_short_code
   end
 
+  def to_param
+    nick
+  end
+
   private
 
   def make_user_dir
