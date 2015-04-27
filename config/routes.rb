@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/create'
+
+  get 'password_resets/edit'
+
+  get 'password_resets/update'
+
 root :to => 'posts#index'
 resources :user_sessions
 resources :users do
@@ -9,6 +15,8 @@ resources :users do
     get :user_likes, to: 'users#user_likes'
   end
 end
+
+resources :password_resets, only: [:create, :update, :edit, :new]
 
 resources :posts do
   collection do
