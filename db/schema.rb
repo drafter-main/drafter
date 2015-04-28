@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422191606) do
+ActiveRecord::Schema.define(version: 20150423100551) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20150422191606) do
     t.integer  "failed_logins_count", limit: 4,   default: 0
     t.datetime "lock_expires_at"
     t.string   "unlock_token",        limit: 255
+    t.string   "avatar",              limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
