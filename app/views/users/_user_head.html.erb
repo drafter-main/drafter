@@ -1,0 +1,30 @@
+<div class="profile_head text-center col-xs-12 ">
+  <div class="avatar">
+    ava
+  </div>
+  <div class="text-center profile_info">
+    <div class="user_name"><%= @user.nick %></div>
+    <div class="user_exists"><%= date_diff(@user.created_at) %> зареєстрований </div>
+    <div class="user_rating"><%= @user.rating %> рейтинг</div>
+    <div class="user_activity">
+      <span class="user_posts_q">постів <%= @user.posts.length %></span>
+      <span class="user_comments_q">коментів <%= @user.comments.length %></span>
+    </div>
+    <div class="user_votes">
+      <span>поставив</span>
+      <span class="user_voted_p"><%= @votes.where(vote_flag: 1).length %> плюси</span>
+      <span class="user_voted_n"><%= @votes.where(vote_flag: 0).length %> мінуса</span>
+    </div>
+  </div>
+  <div class="profile_navigation">
+    <ul class="nav nav-pills nav-justified">
+      <li role="presentation" class="active"><%= link_to 'Пости Юзера', user_posts_user_path %></li>
+      <li role="presentation"><%= link_to 'Коментарі Юзера', user_comments_user_path %></li>
+      <li role="presentation"><%= link_to 'Юзер Аплодував', user_likes_user_path %></li>
+    </ul>
+  </div>
+  <div id="nav">
+    <p id="notice"><%= flash[:notice] %></p>
+    <p id="alert"><%= flash[:alert] %></p>
+  </div>
+</div>

@@ -2,7 +2,7 @@ module PostsHelper
   include ActsAsTaggableOn::TagsHelper
 
   def item_rating(item)
-    item.get_upvotes.size - item.get_downvotes.size
+    item.rating
   end
 
   def display_plus_minus(item)

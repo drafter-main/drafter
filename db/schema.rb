@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423100551) do
+ActiveRecord::Schema.define(version: 20150426110753) do
+
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -82,7 +83,6 @@ ActiveRecord::Schema.define(version: 20150423100551) do
     t.integer  "rating",              limit: 4,   default: 0
     t.string   "nick",                limit: 255
     t.boolean  "admin",               limit: 1,   default: false
-    t.string   "code",                limit: 255
     t.date     "banned_to",                       default: '2015-04-06'
     t.string   "folder",              limit: 255
     t.integer  "failed_logins_count", limit: 4,   default: 0

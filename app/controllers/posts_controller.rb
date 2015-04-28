@@ -5,11 +5,15 @@ class PostsController < ApplicationController
   before_filter :check_if_admin, only: [:destroy]
 
   def index
-    @posts = Post.includes(:comments).where(published: true)
+    posts = []
+    @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
+    @posts.each{|p| posts << p if p.rating >= 0}
+    @posts = posts
   end
 
   def best
     @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
+    @posts.sort_by {|post| post.rating }.reverse
     render 'posts/index'
   end
 
@@ -76,6 +80,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def rating
+
+  end
 
   def find_user_and_post
     @user = current_user

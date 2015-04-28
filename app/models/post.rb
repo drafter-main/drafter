@@ -14,4 +14,8 @@ class Post < Base
   def to_param
     code
   end
+
+  def rating
+    get_upvotes.size - get_downvotes.size
+  end
 end
