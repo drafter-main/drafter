@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_filter :failed_response, only: [:up_vote, :down_vote, :neutral_vote]
-  before_filter :require_login, :except => [:index, :show]
+  before_filter :require_login, :except => [:index, :show, :best, :most_recent]
   before_filter :banned?, except: [:index, :show]
   before_filter :check_if_admin, only: [:destroy]
 
