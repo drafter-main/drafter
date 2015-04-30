@@ -24,6 +24,7 @@ class ProfilesController < ApplicationController
     validate_change_params(params)
     @user.email = params['email']
     @user.nick = params['nick']
+    @user.avatar = save_user_avatar(params[:avatar], @user.folder, @user.avatar) if params[:avatar]
     @user.save(validate: false)
     redirect_to action: 'settings'
   end
@@ -89,5 +90,17 @@ class ProfilesController < ApplicationController
   def find_user
     @user = current_user
     @votes = @user.votes
+  end
+
+  def save_user_avatar(image_data, folder, old_name)
+    image = Magick::Image.from_blob(image_data.read).first
+    image.resize_to_fit!(120)
+    name = Digest::MD5.hexdigest(folder + Time.now.to_s) + "." + image.format
+    if image.write(Rails.root.join("public/content/" + folder + "/") + name)
+      File.delete(Rails.root.join("public/content/" + folder + "/") + old_name) if old_name
+      name
+    else
+      old_name
+    end
   end
 end

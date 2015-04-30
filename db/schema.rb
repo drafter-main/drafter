@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150427183032) do
 
+
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
     t.string   "provider",   limit: 255, null: false
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.string   "reset_password_token",            limit: 255
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.string   "avatar",              limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
