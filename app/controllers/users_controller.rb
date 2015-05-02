@@ -7,10 +7,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
+    if verify_recaptcha && @user.save
       auto_login(@user)
-      redirect_to(root_url, notice: 'User was successfully created')
+      redirect_to(root_url, notice: 'Юзер створений')
     else
+      flash[:alert] = 'Помилка створення юзера'
       render :new
     end
   end

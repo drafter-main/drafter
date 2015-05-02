@@ -27,6 +27,8 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'time_diff', '~> 0.3.0'
 
+gem "recaptcha", :require => "recaptcha/rails"
+
 group :development do
   gem 'pry'
   gem 'spring'
