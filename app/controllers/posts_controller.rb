@@ -79,6 +79,14 @@ class PostsController < ApplicationController
     render action: :index if post.destroy
   end
 
+  def search
+    @search = Post.search do
+      fulltext params[:search]
+    end
+    @posts = @search.results
+    render :index
+  end
+
   private
 
   def rating

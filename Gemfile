@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2'
+# setting from .env to ENV
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'mysql2'
 gem 'sorcery'
 gem 'rmagick', '2.13.2'
@@ -21,6 +23,14 @@ gem 'acts-as-taggable-on', '~> 3.4'
 
 # rating
 gem 'acts_as_votable', '~> 0.10.0'
+
+# search
+gem 'sunspot_rails'
+# hz production
+group :development do
+  gem 'sunspot_solr'
+end
+
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

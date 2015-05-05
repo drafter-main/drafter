@@ -25,6 +25,7 @@ resources :posts do
     put :up_vote, to: 'posts#up_vote'
     put :down_vote, to: 'posts#down_vote'
     put :neutral_vote, to: 'posts#neutral_vote'
+    get :search, to: 'posts#search'
   end
 end
 
