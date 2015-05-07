@@ -1,17 +1,33 @@
 <div id="add_new_comment">
-  <%= form_tag "", class: 'new_comment' do %>
+  <%= form_tag "", id: "form_1", class: 'new_comment' do %>
     <div class="form-group">
       <input type="hidden" id="post_id" name="post_id" value="<%= @post.id %>">
       <input type="hidden" id="parent_comment" name="parent_comment" value="">
-	  <input type="text" id="com_body" class='form-control' name="com_body" value="">
+	    <textarea id="com_body" class='form-control' name="com_body" value=""></textarea>
     </div>
-    <button type="button" class="btn btn-primary send_comment">Додати</button>
+    <div class="add-comment-buttons col-xs-12">
+      <div class="from-comment-attachment" data-img=""><span>Нічого не прикріплено</span>
+        <i class="dismiss-comment-attachment glyphicon glyphicon-remove hidden"></i>  
+      </div>
+      <button type="button" class="btn btn-danger send_comment">Додати</button>
+      <button type="button" class="btn btn-default add-comment-image">Прикріпити зображення</button>
+    </div>
   <% end %>
   <div class="comment_item hidden_comment" data-comment="">
-    <div class="comment_owner"></div>
-    <div class="comment_content"></div>
-    <div class="comment_user_actions">
-  	  <a class="comment_reply" href="javascript:void(0)">Відповісти</a>
+    <div class="col-xs-1">
+      <img class="comment-avatar" src="javascript:void(0);" >
+    </div>
+    <div class="col-xs-11">
+      <div class="head_comment">
+        <span class="comment_owner"></span>
+        <span class="rating_comment">0 points</span>
+      </div>
+      <div class="comment_content">
+        <div class="comment-content-text"></div>
+      </div>
+      <div class="comment_user_actions">
+    	  <a class="comment_reply" href="javascript:void(0)">Відповісти</a>
+      </div>
     </div>
   </div>
 </div>

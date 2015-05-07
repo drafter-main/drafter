@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  require 'fileutils'
+
   authenticates_with_sorcery! do |config|
     config.authentications_class = Authentication
   end
@@ -30,9 +32,11 @@ class User < ActiveRecord::Base
   private
 
   def make_user_dir
-    users_root =  Rails.root.join("public/content/")
+    content_root =  Rails.root.join("public/content/")
     folder_created = Digest::MD5.hexdigest(id.to_s + Time.now.to_s)
-    Dir.mkdir(users_root + folder_created)
+    Dir.mkdir(content_root + "comments/" + folder_created)
+    Dir.mkdir(content_root + "posts/" + folder_created)
+    Dir.mkdir(content_root + "avatars/" + folder_created)
     self.folder = folder_created
   end
 

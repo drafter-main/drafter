@@ -1,4 +1,6 @@
 <div class="profile">
   <%= render 'profile_head'%>
-  my comments!
+  <div id="comments">
+    <%= render partial: 'my_comment', collection: @comments, as: :comment %>
+  </div>
 </div>

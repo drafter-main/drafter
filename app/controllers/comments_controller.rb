@@ -21,7 +21,9 @@ class CommentsController < ApplicationController
     end
 
     if @comment.save
-      render json: {success: true, code: @comment.code, nick: owner.nick }
+      res = { success: true, code: @comment.code, nick: owner.nick, user_path: user_posts_user_path(owner.nick), avatar: get_avatar_thumb(owner) }
+      res[:img] = @comment.comment_img if @comment.comment_img
+      render json: res
     else
       render json: {success: false}
     end
@@ -106,7 +108,7 @@ private
   end
  
   def comment_params
-    params.require(:comment).permit(:post_id, :com_body)
+    params.require(:comment).permit(:post_id, :com_body, :comment_img)
   end
 
   def failed_response

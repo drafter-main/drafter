@@ -134,7 +134,7 @@ class PostsController < ApplicationController
   end
 
   def save_post_image(image, folder)
-    users_root =  Rails.root.join("public/content/" + folder + "/")
+    users_root =  Rails.root.join("public/content/posts/" + folder + "/")
     name = Digest::MD5.hexdigest(folder + Time.now.to_s) + ".png"
     image_data = Base64.decode64(image['data:image/png;base64,'.length .. -1])
     File.open(users_root + name, 'wb') do|f|

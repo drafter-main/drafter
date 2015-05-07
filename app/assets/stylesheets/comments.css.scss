@@ -1,23 +1,44 @@
 #comments {
-  margin-top: 50px;
+  .col-xs-1 {
+    padding: 0;
+  }
+  .comment-avatar {
+    float: right;
+    margin-right: 10px;
+  }
+  .rating_comment {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999;
+  }
+  .comment_content {
+    margin-top: 2px;
+    margin-bottom: 5px;
+  } 
   .replies {
-    margin-left: 20px;
+    margin-left: 50px;
   }
   .comment_item {
     margin-top: 10px;
+  }
+  .comment_user_actions {
+    margin-bottom: 10px;
   }
   .hidden_comment {
     display: none;
   }
   #com_body {
-    height: 50px;
+    height: 80px;
   }
   .comment_owner {
-    font-weight: bold;
-    font-size: 14px;
-    color: #000;
+    a {
+      font-weight: bold;
+      font-size: 16px;
+    }
   }
   .comment_reply {
+    font-size: 12px;
+    font-weight: bold;
     color: #999;
   }
   [data-active="false"] {
@@ -25,5 +46,40 @@
   }
   .plus-comment, .minus-comment {
     margin-left: 5px;
+  }
+  .from-comment-attachment {
+    height: 23px;
+    float: left;
+    display: inline-block;
+    color: #999;
+    border: 1px #cccccc solid;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .dismiss-comment-attachment {
+    margin-left: 5px;
+    font-size: 10px;
+    color: black;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    text-decoration: none;
+    opacity: 0.5;
+    border: 0;
+    -webkit-appearance: none;
+  }
+  .dismiss-comment-attachment:hover {
+    opacity: 0.7;
+  }
+  .send_comment, .add-comment-image {
+    float: right;
+    margin-left: 10px;
+  }
+  #comments_tree {
+    margin-top: 20px;
+  }
+  .add-comment-buttons {
+    margin-bottom: 20px;
   }
 }

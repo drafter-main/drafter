@@ -5,7 +5,8 @@ $(document).on('ready page:load', function() {
 var Comments = {};
 
 Comments.Comment = function() {
-  var $LoginModal = $("#user_actions_modal");
+  var $LoginModal = $("#user_actions_modal"),
+      comment_form_count = 2;
 
   function show_login_modal_if_error() {
     if ($LoginModal.length) {
@@ -23,16 +24,42 @@ Comments.Comment = function() {
     add_comment_form($(this).parents(".comment_item"));
   });
 
+  $(document).on("click", ".add-comment-image", function(){
+    var $ImgModal = $("#add-from-url-modal");
+    $ImgModal.find("#add-image-url").attr("data-selected", $(this).parents("form").attr("id"));
+    $ImgModal.modal("show");
+  });
+
+  $(document).on("click", "#image-url-field-submit", function(){
+    var form_id = $(this).parents(".modal-body").find("#add-image-url").data("selected"),
+        $attachment = $("#" + form_id).find(".from-comment-attachment");
+    $attachment.attr("data-img", $("#image-url-field").val());
+    $attachment.find("span").html("<a class='comment-img-url' href='javascript:void(0)'>Зображення</a>");
+    $attachment.find("i").removeClass("hidden");
+    $("#add-from-url-modal").modal("hide");
+  });
+
+  $(document).on("click", ".dismiss-comment-attachment", function(){
+    var $attachment = $(this).parents(".from-comment-attachment");
+    $attachment.attr("data-img", "");
+    $attachment.find("span").html("Нічого не прикріплено");
+    $(this).addClass("hidden");
+  });
+
   function send_comment(form, button, reply) {
     if ($("#active_user").length && $("#active_user").val() == "false") {
       show_login_modal_if_error();
       return false;
     }
-    var data = {
-      com_body: form.find("#com_body").val(),
-      post_id: form.find("#post_id").val(),
-      parent_comment: form.find("#parent_comment").val()
-    };
+    var $attachment = form.find(".from-comment-attachment"),
+        data = {
+          com_body: form.find("#com_body").val(),
+          post_id: form.find("#post_id").val(),
+          parent_comment: form.find("#parent_comment").val()
+        };
+
+    if ($attachment.attr("data-img").length) data.comment_img = $attachment.attr("data-img");
+
     button_loading.start(button);
     $.ajax({
       type: "post",
@@ -58,8 +85,11 @@ Comments.Comment = function() {
   function add_comment_form(item) {
     if (item.find("form").length) return;
     var form = $("#add_new_comment").find("form").clone();
+    form.attr("id", "form_" + comment_form_count);
+    comment_form_count++;
     form.find("#com_body").val("");
     form.find("#parent_comment").val(item.attr('data-comment'));
+    form.addClass("col-xs-offset-1");
     item.append(form);
   }
 
@@ -70,10 +100,16 @@ Comments.Comment = function() {
   }
 
   function build_block(response, data) {
-    var block = $("#add_new_comment").find(".comment_item").clone();
+    var block = $("#add_new_comment").find(".comment_item").clone(),
+        voutes_up = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=" + response.code + "></div>",
+        voutes_down = "<div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=" + response.code + "></div>";
     block.attr('data-comment', response.code);
-    block.find(".comment_owner").html(response.nick);
-    block.find(".comment_content").html(data.com_body);
+    block.find(".comment_owner").html("<a href='" + response.user_path + "'>" + response.nick + "</a>");
+    block.find(".comment-content-text").html(data.com_body);
+    if (response.img) block.find(".comment_content").append("<img class='comment-body-img' src='" + response.img + "' width='300'/>");
+    block.find(".comment-avatar").attr("src", response.avatar);
+    block.find(".comment_user_actions").append(voutes_up);
+    block.find(".comment_user_actions").append(voutes_down);
     block.show();
     return block;
   }
@@ -95,7 +131,7 @@ Comments.Comment = function() {
   }
 
 
-    $('.plus-comment').on('click', function(){
+    $(document).on("click", ".plus-comment", function(){
         if ($("#active_user").length && $("#active_user").val() == "false") {
           show_login_modal_if_error();
           return false;
@@ -117,7 +153,7 @@ Comments.Comment = function() {
         } else neutral_vote(self);
     });
 
-    $('.minus-comment').on('click', function(){
+    $(document).on("click", ".minus-comment", function(){
         if ($("#active_user").length && $("#active_user").val() == "false") {
           show_login_modal_if_error();
           return false;
@@ -143,14 +179,15 @@ Comments.Comment = function() {
         var rating_div = self.closest('.comment_item').find('.rating_comment'),
             rating_val = parseInt(rating_div.html());
         if (self.hasClass('glyphicon-thumbs-up')){
-            if (self.next().attr('data-active') == 'false') rating_div.html(rating_val + 2);
-            else if (self.attr('data-active') == 'true') rating_div.html(rating_val + 1);
-            else rating_div.html(rating_val + -1);
+            if (self.next().attr('data-active') == 'false') rating_val += 2;
+            else if (self.attr('data-active') == 'true') rating_val += 1;
+            else rating_val -= 1;
         } else {
-            if (self.prev().attr('data-active') == 'false') rating_div.html(rating_val - 2);
-            else if (self.attr('data-active') == 'true') rating_div.html(rating_val - 1);
-            else rating_div.html(rating_val + 1);
+            if (self.prev().attr('data-active') == 'false') rating_val -= 2;
+            else if (self.attr('data-active') == 'true') rating_val -= 1;
+            else rating_val += 1;
         }
+        rating_div.html(rating_val == 1 ? rating_val + " оплеск" : rating_val + " оплесків");
     }
 
     function neutral_vote(el) {

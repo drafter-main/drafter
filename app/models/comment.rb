@@ -8,4 +8,8 @@ class Comment < Base
   before_create do
     generate_short_code
   end
+
+  def rating
+    get_upvotes.size - get_downvotes.size
+  end
 end
