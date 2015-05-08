@@ -10,4 +10,21 @@ Menu.Main = function() {
   	UserActionsModal.find(".modal-title").html("Увійти в 4claps");
     UserActionsModal.modal('show');
   });
-}
+
+  $("#search_icon").click(function(){
+    $("#search_icon").toggle();
+    $("#search_form").toggle();
+    $("#search").focus();
+  });
+
+  $("#search").focusout(function(){
+    $("#search_icon").toggle();
+    $("#search_form").toggle();
+    $("#search").val('');
+  });
+
+  $("#search_submit").click(function(){
+    $("#search_form").submit();
+  });
+
+};

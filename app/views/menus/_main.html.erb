@@ -27,19 +27,30 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <div class="search_div">
+            <div class="search_icon">
+              <i class="glyphicon glyphicon-search" id="search_icon"></i>
+            </div>
+            <%= form_tag search_posts_path, :method => :get, id: 'search_form' do %>
+              <input type="text" name="search" id="search">
+              <i class="glyphicon glyphicon-search" id="search_submit"></i>
+            <% end %>
+          </div>
+        </li>
+        <li><a class="right_buttons" href="<%=  new_post_path %>"><i class="glyphicon glyphicon-plus"></i></a></li>
         <% if current_user %>
             <li><a class="right_buttons" href="<%= my_posts_profiles_path %>"><i class="glyphicon glyphicon-user"></i></a></li>
             <li><a class="right_buttons" href="<%= settings_profiles_path %>"><i class="glyphicon glyphicon-cog"></i></a></li>
         <% else %>
-            <li><a role="button"  data-toggle="modal" class="right_buttons" id="user_actions" href="#"><i class="glyphicon glyphicon-log-in"></i></a></li>
+            <li><a role="button"  data-toggle="modal" class="right_buttons last_cell" id="user_actions" href="#"><i class="glyphicon glyphicon-log-in"></i></a></li>
         <% end %>
-        <li><a class="right_buttons" href="<%=  new_post_path %>"><i class="glyphicon glyphicon-plus"></i></a></li>
         <% if is_admin? %>
           <li><a class="right_buttons" href="<%= users_admins_path %>">admin</a></li>
         <% end %>
         <% if current_user %>
           <li>
-            <%= link_to "", :logout, method: :post, class: "glyphicon glyphicon-log-out right_buttons" %>
+            <%= link_to "", :logout, method: :post, class: "glyphicon glyphicon-log-out right_buttons last_cell" %>
           </li>
         <% end %>
       </ul>

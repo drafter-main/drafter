@@ -45,9 +45,52 @@
   }
 
   .navbar-right li {
+    border-bottom: 2px solid #d9e0e2;
+    #search {
+      width: 150px;
+      display: inline-block;
+    }
+    #search_submit {
+      display: inline-block;
+    }
+    .search_div {
+      text-align: center;
+      border-left: 1px solid #d9e0e2;
+      height: 50px;
+      cursor: pointer;
+      color: #879096;
+      background-color: #FFF;
+      font-size: 16px;
+      line-height: 48px;
+      display: block;
+      font-family: 'Fjalla One',sans-serif;
+      font-weight: 400;
+
+      .search_icon {
+        width: 50px;
+      }
+      textarea:focus, input:focus {
+        outline: 0;
+      }
+      #search_form {
+        display: none;
+        width: 200px;
+
+        height: 50px;
+      }
+
+      input {
+        border: none;
+        display: inline-block;
+        height: 48px;
+      }
+    }
     a.right_buttons {
       width: 50px;
       border-left: 1px solid #d9e0e2;
+    }
+    .last_cell {
+      border-right: 1px solid #d9e0e2;
     }
   }
 
