@@ -10,7 +10,7 @@ class Post < Base
   searchable do
     text :title, :boost => 5
     text :description
-    time :published_at
+    time :created_at
   end
 
   before_create do

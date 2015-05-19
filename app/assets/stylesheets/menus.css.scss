@@ -1,13 +1,18 @@
 .container-fluid {
-  width: 1100px; 
+  width: 1100px;
+  height: 50px;
 }
 .navbar.navbar-default {
   background-color: #FFF;
   border: none;
 
+  #logo {
+  margin-right: 15px;
+  margin-top: 8px;
+  }
+
   .bottom_line {
     border-bottom: 2px solid #d9e0e2;
-    margin-top: -2px;
   }
 
   .navbar-brand {
@@ -45,7 +50,7 @@
   }
 
   .navbar-right li {
-    border-bottom: 2px solid #d9e0e2;
+
     #search {
       width: 150px;
       display: inline-block;
@@ -55,7 +60,6 @@
     }
     .search_div {
       text-align: center;
-      border-left: 1px solid #d9e0e2;
       height: 50px;
       cursor: pointer;
       color: #879096;
@@ -65,7 +69,6 @@
       display: block;
       font-family: 'Fjalla One',sans-serif;
       font-weight: 400;
-
       .search_icon {
         width: 50px;
       }
@@ -74,7 +77,7 @@
       }
       #search_form {
         display: none;
-        width: 200px;
+        width: 220px;
 
         height: 50px;
       }
@@ -85,8 +88,7 @@
         height: 48px;
       }
     }
-    a.right_buttons {
-      width: 50px;
+    .right_buttons {
       border-left: 1px solid #d9e0e2;
     }
     .last_cell {
