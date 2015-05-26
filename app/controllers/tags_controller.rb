@@ -4,7 +4,8 @@ class TagsController < ApplicationController
   end
 
   def show
-    @tag =  ActsAsTaggableOn::Tag.find(params[:id])
+    @tag =  ActsAsTaggableOn::Tag.find_by_slug(params[:id])
+    @page_title = @tag.name
     @posts = Post.tagged_with(@tag.name)
   end
 end

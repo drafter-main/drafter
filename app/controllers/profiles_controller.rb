@@ -1,6 +1,5 @@
 class ProfilesController < ApplicationController
-  before_filter :require_login
-  before_filter :find_user
+  before_filter :require_login, :find_user, :set_title
 
   def my_posts
     @posts = @user.posts
@@ -90,6 +89,10 @@ class ProfilesController < ApplicationController
   def find_user
     @user = current_user
     @votes = @user.votes
+  end
+    
+  def set_title
+    @page_title = 'профайл'
   end
 
   def save_user_avatar(image_data, folder, old_name)
