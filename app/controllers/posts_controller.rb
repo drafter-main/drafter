@@ -24,7 +24,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by_code(params[:id])
-    @comments = Comment.includes(:user).where(post_id: @post.id).hash_tree
+    @comments = Comment.includes(:user).where(post_id: @post.id).order("created_at desc").group_by(&:generation)
     @comments_count = comments_count(@comments)
   end
 
@@ -147,14 +147,9 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :description, :content, :content_type, :tag_list, :published)
   end
 
-  def comments_count(comments)
+  def comments_count(comments_group)
     count = 0
-    count += comments.length
-    if comments.length > 0
-      comments.each do |comment, nested_comments|
-        count += comments_count(nested_comments)
-      end
-    end
+    comments_group.each { |key, value| count += value.length } if comments_group.length > 0
     count
   end
 

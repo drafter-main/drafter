@@ -52,12 +52,13 @@ Comments.Comment = function() {
       return false;
     }
     var $attachment = form.find(".from-comment-attachment"),
+        receiver = form.find(".receiver_comment").val(),
         data = {
           com_body: form.find("#com_body").val(),
           post_id: form.find("#post_id").val(),
           parent_comment: form.find("#parent_comment").val()
         };
-
+    if (!reply && receiver.length) data.receiver = receiver.substring(1,substr.length-1);
     if ($attachment.attr("data-img").length) data.comment_img = $attachment.attr("data-img");
 
     button_loading.start(button);
@@ -89,6 +90,7 @@ Comments.Comment = function() {
     comment_form_count++;
     form.find("#com_body").val("");
     form.find("#parent_comment").val(item.attr('data-comment'));
+    form.find(".receiver_comment").val(item.find(".comment_owner a").html());
     form.addClass("col-xs-offset-1");
     item.append(form);
   }
@@ -99,17 +101,30 @@ Comments.Comment = function() {
     else return false;
   }
 
+  function update_comments_count() {
+    var $amount_comments = $(".post .amount_comments strong"),
+        size = parseInt($amount_comments.html()) +1,
+        last = String(size);
+        title = "";
+    last = last.substr(last.length-1, 1);
+    if ( last == "1" && size != 11 ) title = "коментар";
+    else if (size > 1 && size < 5) title = "коментарі";
+    else title = "коментарів";
+    $amount_comments.html(size + " " + title);
+  }
+
   function build_block(response, data) {
-    var block = $("#add_new_comment").find(".comment_item").clone(),
-        voutes_up = "<div class='glyphicon glyphicon-thumbs-up plus-comment' data-active='true' data=" + response.code + "></div>",
-        voutes_down = "<div class='glyphicon glyphicon-thumbs-down minus-comment' data-active='true' data=" + response.code + "></div>";
+    var block = $("#add_new_comment").find(".comment_item").clone();
     block.attr('data-comment', response.code);
     block.find(".comment_owner").html("<a href='" + response.user_path + "'>" + response.nick + "</a>");
-    block.find(".comment-content-text").html(data.com_body);
+    if (response.receiver) {
+      block.find(".comment-content-text").html("<a href='" + response.receiver.path + "'>" + response.receiver.nick + "</a> " + data.com_body);
+    } else {
+      block.find(".comment-content-text").html(data.com_body);
+    }
     if (response.img) block.find(".comment_content").append("<img class='comment-body-img' src='" + response.img + "' width='300'/>");
     block.find(".comment-avatar").attr("src", response.avatar);
-    block.find(".comment_user_actions").append(voutes_up);
-    block.find(".comment_user_actions").append(voutes_down);
+    update_comments_count();
     block.show();
     return block;
   }

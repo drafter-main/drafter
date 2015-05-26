@@ -1,6 +1,20 @@
 <div class="profile">
   <%= render 'profile_head'%>
-  <div id="comments">
+  <div id="profile_comments">
+      <%= form_tag "", id: "form_1", class: 'new_comment hidden' do %>
+	    <div class="form-group">
+	      <input type="hidden" id="post_id" name="post_id" value="">
+	      <input type="hidden" id="parent_comment" name="parent_comment" value="">
+		  <textarea id="com_body" class='form-control' name="com_body" value=""></textarea>
+	    </div>
+	    <div class="add-comment-buttons col-xs-12">
+	      <div class="from-comment-attachment" data-img=""><span>Нічого не прикріплено</span>
+	        <i class="dismiss-comment-attachment glyphicon glyphicon-remove hidden"></i>  
+	      </div>
+	      <button type="button" class="btn btn-danger send_comment">Додати</button>
+	      <button type="button" class="btn btn-default add-comment-image">Прикріпити зображення</button>
+	    </div>
+	  <% end %>
     <%= render partial: 'my_comment', collection: @comments, as: :comment %>
   </div>
 </div>

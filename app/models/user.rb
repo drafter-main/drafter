@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   end
 
   has_many :comments
+  has_many :receivers, class_name: 'Comment', foreign_key: 'receiver_id'
   has_many :posts
   has_many :authentications, :dependent => :destroy
   accepts_nested_attributes_for :authentications
