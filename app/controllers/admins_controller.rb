@@ -1,7 +1,9 @@
 class AdminsController < ApplicationController
 before_filter :check_if_admin
 before_filter :check_user, only: :ban_user
+
   def users
+    @page_title = 'Адмінка'
     @users = User.all
   end
 

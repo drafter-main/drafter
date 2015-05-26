@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   before_filter :check_if_admin, only: [:destroy]
 
   def index
+    @page_title = 'гаряче'
     posts = []
     @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
     @posts.each{|p| posts << p if p.rating >= 0}
@@ -12,18 +13,21 @@ class PostsController < ApplicationController
   end
 
   def best
+    @page_title = 'найкраще'
     @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
     @posts.sort_by {|post| post.rating }.reverse
     render 'posts/index'
   end
 
   def most_recent
+    @page_title = 'свіже'
     @posts = Post.includes(:comments).where(published: true).order(created_at: :desc)
     render 'posts/index'
   end
 
   def show
     @post = Post.find_by_code(params[:id])
+    @page_title = @post.title
     @comments = Comment.includes(:user).where(post_id: @post.id).order("created_at desc").group_by(&:generation)
     @comments_count = comments_count(@comments)
   end
@@ -44,7 +48,7 @@ class PostsController < ApplicationController
     @post = user.posts.new(data)
 
     if @post.save
-      redirect_to(root_url, notice: 'Post was successfully created')
+      redirect_to(root_url, notice: 'Публікація створена')
     else
       redirect_to action: :new
     end
