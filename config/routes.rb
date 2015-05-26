@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/create'
+
+  get 'password_resets/edit'
+
+  get 'password_resets/update'
+
 root :to => 'posts#index'
 resources :user_sessions
 resources :users do
@@ -10,6 +16,8 @@ resources :users do
   end
 end
 
+resources :password_resets, only: [:create, :update, :edit, :new]
+
 resources :posts do
   collection do
     get :best, to: 'posts#best'
@@ -17,6 +25,7 @@ resources :posts do
     put :up_vote, to: 'posts#up_vote'
     put :down_vote, to: 'posts#down_vote'
     put :neutral_vote, to: 'posts#neutral_vote'
+    get :search, to: 'posts#search'
   end
 end
 

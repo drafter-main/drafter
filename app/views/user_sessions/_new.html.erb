@@ -15,9 +15,10 @@
 <% end %>
 
 <div style="margin-top: 20px;">
-  <%= link_to 'Login with VK', auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %> | 
-  <%= link_to 'Login with Facebook', auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
+  <%= link_to 'Залогінитись з VK', auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %> |
+  <%= link_to 'Залогінитись з Facebook', auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
 </div>
 <div style="margin-top: 20px;">
-  <%= link_to "Register", new_user_path, class: "btn btn-success" %>
+  <%= link_to "Зареєструватись", new_user_path, class: "btn btn-success" %>
 </div>
+<%= link_to 'Забув пароль?', new_password_reset_path %>

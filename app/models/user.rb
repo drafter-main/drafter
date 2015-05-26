@@ -17,13 +17,16 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true
   validates :password_confirmation, presence: true
 
-  # validates :nick, presence: true, uniqueness: true, length: { in: 3..10 },format: { with: /\w/ }
-
-  validates :email, uniqueness: true, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
+  validates :nick, presence: true, :uniqueness => {:case_sensitive => false}, length: { in: 3..10 },format: { with: /\w/ }
+  validates :email, :uniqueness => {:case_sensitive => false}, presence: true,
+            format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   before_create do
-    set_nick
     make_user_dir
+  end
+
+  before_validation do
+    set_nick
   end
 
   def to_param
@@ -42,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def set_nick
-    @nick = email.split('@').first
+    @nick = email.split('@').first.downcase[0..6]
     @nick = @nick.gsub(/[^0-9A-Za-z]/, '')
     check_nick(@nick)
     self.nick = @nick

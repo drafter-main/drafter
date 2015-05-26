@@ -7,6 +7,12 @@ class Post < Base
 
   validates_presence_of :user_id
 
+  searchable do
+    text :title, :boost => 5
+    text :description
+    time :created_at
+  end
+
   before_create do
     generate_short_code
   end
