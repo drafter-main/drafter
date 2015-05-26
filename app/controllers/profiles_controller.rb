@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
   end
 
   def my_comments
-    @comments = @user.comments
+    @comments = @user.comments.includes(:post).order("created_at DESC")
   end
 
   def up_voted
@@ -99,11 +99,13 @@ class ProfilesController < ApplicationController
     image = Magick::Image.from_blob(image_data.read).first
     image.resize_to_fit!(120)
     name = Digest::MD5.hexdigest(folder + Time.now.to_s) + "." + image.format
-    if image.write(Rails.root.join("public/content/" + folder + "/") + name)
-      File.delete(Rails.root.join("public/content/" + folder + "/") + old_name) if old_name
-      name
-    else
-      old_name
+    image.write(Rails.root.join("public/content/avatars/" + folder + "/" + name))
+    image.resize_to_fit!(50)
+    image.write(Rails.root.join("public/content/avatars/" + folder + "/thumb_" + name))
+    if old_name
+      File.delete(Rails.root.join("public/content/avatars/" + folder + "/" + old_name))
+      File.delete(Rails.root.join("public/content/avatars/" + folder + "/thumb_" + old_name))
     end
+    name
   end
 end

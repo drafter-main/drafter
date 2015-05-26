@@ -36,6 +36,8 @@ resources :comments do
     put :up_vote, to: 'comments#up_vote'
     put :down_vote, to: 'comments#down_vote'
     put :neutral_vote, to: 'comments#neutral_vote'
+    get 'parent_comment/:code', to: 'comments#parent_comment'
+    get 'comment_tree/:code', to: 'comments#comment_tree'
   end
 end
 

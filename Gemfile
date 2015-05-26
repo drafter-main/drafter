@@ -16,8 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 5.0.3'
-# comments
-gem 'closure_tree', '~> 5.0.0'
+
 # tags for posts
 gem 'acts-as-taggable-on', '~> 3.4'
 

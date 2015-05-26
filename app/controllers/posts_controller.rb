@@ -28,7 +28,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find_by_code(params[:id])
     @page_title = @post.title
-    @comments = Comment.includes(:user).where(post_id: @post.id).hash_tree
+    @comments = Comment.includes(:user).where(post_id: @post.id).order("created_at desc").group_by(&:generation)
     @comments_count = comments_count(@comments)
   end
 
@@ -146,7 +146,7 @@ class PostsController < ApplicationController
   end
 
   def save_post_image(image, folder)
-    users_root =  Rails.root.join("public/content/" + folder + "/")
+    users_root =  Rails.root.join("public/content/posts/" + folder + "/")
     name = Digest::MD5.hexdigest(folder + Time.now.to_s) + ".png"
     image_data = Base64.decode64(image['data:image/png;base64,'.length .. -1])
     File.open(users_root + name, 'wb') do|f|
@@ -159,14 +159,9 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :description, :content, :content_type, :tag_list, :published)
   end
 
-  def comments_count(comments)
+  def comments_count(comments_group)
     count = 0
-    count += comments.length
-    if comments.length > 0
-      comments.each do |comment, nested_comments|
-        count += comments_count(nested_comments)
-      end
-    end
+    comments_group.each { |key, value| count += value.length } if comments_group.length > 0
     count
   end
 

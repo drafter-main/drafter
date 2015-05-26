@@ -1,18 +1,30 @@
 <div class="comment_item" data-comment="<%= comment.code %>">
-  <div class="head_comment">
-    <span class="comment_owner">
-      <%= link_to comment.user.nick, user_posts_user_path(comment.user.nick) %>
-      <%= link_to "", comment, method: :put, class: "glyphicon glyphicon-trash" if is_admin?  %>
-    </span>
-    <span class="rating_comment"><%= item_rating(comment) %> points</span>
+  <div class="col-xs-1">
+    <img class="comment-avatar" src="<%= get_avatar_thumb(comment.user) %>" width="50"/>
   </div>
-  <% if comment.banned %>
-    <div class="comment_content">Видалений модератором</div>
-  <% else %>
-    <div class="comment_content"><%= comment.com_body %></div>
-  <% end %>
-  <div class="comment_user_actions">
-  	<a class="comment_reply" href="javascript:void(0)">Відповісти</a>
-    <%= display_plus_minus_comment(comment) %>
+  <div class="col-xs-11">
+    <div class="head_comment">
+      <span class="comment_owner">
+        <%= link_to comment.user.nick, user_posts_user_path(comment.user.nick) %>
+        <%= link_to "", comment, method: :put, class: "glyphicon glyphicon-trash" if is_admin?  %>
+      </span>
+      <span class="rating_comment"><%= item_rating(comment) %></span>
+    </div>
+    <% if comment.banned %>
+      <div class="comment_content">Видалений модератором</div>
+    <% else %>
+      <div class="comment_content">
+        <div class="comment-content-text"><%= comment_content(comment) %></div>
+        <% if comment.comment_img %>
+          <img class="comment-body-img" src="<%= comment.comment_img %>" width="300" />
+        <% end %>
+      </div>
+    <% end %>
+    <div class="comment_user_actions">
+    	<a class="comment_reply" href="javascript:void(0)">Відповісти</a>
+      <% unless current_user.id == comment.user.id %>
+        <%= display_plus_minus_comment(comment) %>
+      <% end %>
+    </div>
   </div>
 </div>
