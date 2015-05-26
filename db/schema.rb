@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427183032) do
+ActiveRecord::Schema.define(version: 20150526182640) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.boolean  "banned",      limit: 1,   default: false
     t.string   "code",        limit: 255
     t.string   "comment_img", limit: 255
+    t.integer  "receiver_id", limit: 4
+    t.integer  "generation",  limit: 4
   end
 
   create_table "posts", force: :cascade do |t|
@@ -48,9 +50,9 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.string   "description",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "code",         limit: 255
     t.string   "content",      limit: 255
     t.string   "content_type", limit: 255
-    t.string   "code",         limit: 255
     t.boolean  "published",    limit: 1
   end
 
@@ -70,6 +72,7 @@ ActiveRecord::Schema.define(version: 20150427183032) do
   create_table "tags", force: :cascade do |t|
     t.string  "name",           limit: 255
     t.integer "taggings_count", limit: 4,   default: 0
+    t.string  "slug",           limit: 255
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
