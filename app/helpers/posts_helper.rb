@@ -2,7 +2,8 @@ module PostsHelper
   include ActsAsTaggableOn::TagsHelper
 
   def item_rating(item)
-    item.rating
+    rating = item.rating
+    rating == 1 ? "#{rating} оплеск".html_safe : "#{rating} оплесків".html_safe
   end
 
   def display_plus_minus(item)
@@ -29,6 +30,6 @@ module PostsHelper
   end
 
   def image_type_path(content)
-    Rails.public_path + '/content/' + content
+    Rails.public_path + '/content/posts/' + content
   end
 end

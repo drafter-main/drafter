@@ -1,0 +1,26 @@
+<div class="col-xs-8 col-md-8 profile-comment">
+  <div class="profile-user-comment" data-code="<%= comment.code %>">
+    <div class="profile-comment-head">
+      <span class="profile-rating-comment"><%= item_rating(comment) %></span>
+       додано до <%= link_to comment.post.title, comment.post%> 
+      <% if comment.parent_id %>
+       відповідь користувачеві <%= link_to "@" + comment.receiver.nick, user_posts_user_path(comment.receiver.nick)%>
+      <% end %>
+    </div>
+    <div class="profile-comment-body">
+      <div class="profile-comment-text"><%= comment.com_body %></div>
+      <% if comment.comment_img %>
+        <img class="comment-body-img" src="<%= comment.comment_img %>" width="300" />
+      <% end %>
+    </div>
+    <div class="profile-comment-actions">
+      <a href="javascript:void(0);" class="profile-comment-show-tree">відповіді</a>
+      <% if comment.parent_id %>
+        <a href="javascript:void(0);" class="profile-comment-show-parent">батьківський</a>
+      <% end %>
+      <% unless current_user.id == comment.user.id %>
+        <%= display_plus_minus_comment(comment) %>
+      <% end %>
+    </div>
+  </div>
+</div>

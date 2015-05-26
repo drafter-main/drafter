@@ -1,7 +1,9 @@
-<%= render @post %>
-<hr>
-
-<div id="comments">
-  <%= render 'comments/new' %>
-  <%= render 'comments/comments' %>
+<div class="col-xs-8 col-md-8">
+  <%= render @post %>
+  <hr>
+  <div id="comments">
+    <%= render 'comments/new' %>
+	<%= render 'comments/comments' %>
+  </div>
+  <%= render 'add_from_url_modal' %>
 </div>

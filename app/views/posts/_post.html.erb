@@ -17,7 +17,7 @@
   </div>
 
   <div class="post_bottom_1 row">
-    <span class="rating_post"><strong><%= item_rating(post) %> points </strong></span>
+    <span class="rating_post"><strong><%= item_rating(post) %></strong></span>
     <span class="amount_comments"><strong><%= comments_notification(@comments_count ? @comments_count : post.comments.count)  %></strong></span>
       <span class="post_tags">
         <% post.tags.each do |tag|%>

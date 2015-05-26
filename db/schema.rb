@@ -31,14 +31,15 @@ ActiveRecord::Schema.define(version: 20150427183032) do
   add_index "comment_hierarchies", ["descendant_id"], name: "comment_desc_idx", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.integer  "post_id",    limit: 4
-    t.string   "com_body",   limit: 255
+    t.integer  "user_id",     limit: 4
+    t.integer  "post_id",     limit: 4
+    t.string   "com_body",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "parent_id",  limit: 4
-    t.boolean  "banned",     limit: 1,   default: false
-    t.string   "code",       limit: 255
+    t.integer  "parent_id",   limit: 4
+    t.boolean  "banned",      limit: 1,   default: false
+    t.string   "code",        limit: 255
+    t.string   "comment_img", limit: 255
   end
 
   create_table "posts", force: :cascade do |t|
@@ -47,9 +48,9 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.string   "description",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "code",         limit: 255
     t.string   "content",      limit: 255
     t.string   "content_type", limit: 255
+    t.string   "code",         limit: 255
     t.boolean  "published",    limit: 1
   end
 
