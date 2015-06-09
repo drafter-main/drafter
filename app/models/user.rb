@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  authenticates_with_sorcery!
   require 'fileutils'
 
   authenticates_with_sorcery! do |config|

@@ -2,12 +2,12 @@
 # The default is nothing which will include only core features (password encryption, login/logout).
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging, :external
-Rails.application.config.sorcery.submodules = [:external, :brute_force_protection, :reset_password]
+Rails.application.config.sorcery.submodules = [:external, :brute_force_protection, :reset_password, :remember_me]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
 
-  config.external_providers = [:facebook, :vk]
+  config.external_providers = [:facebook, :vk, :twitter]
   # -- core --
   # What controller action to call for non-authenticated users. You can also
   # override the 'not_authenticated' method of course.
@@ -106,10 +106,10 @@ Rails.application.config.sorcery.configure do |config|
   # Twitter wil not accept any requests nor redirect uri containing localhost,
   # make sure you use 0.0.0.0:3000 to access your app in development
   #
-  # config.twitter.key = ""
-  # config.twitter.secret = ""
-  # config.twitter.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=twitter"
-  # config.twitter.user_info_mapping = {:email => "screen_name"}
+  config.twitter.key = ""
+  config.twitter.secret = ""
+  config.twitter.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=twitter"
+  config.twitter.user_info_mapping = {:email => "screen_name"}
   #
   config.facebook.key = "1572813562931390"
   config.facebook.secret = "c0b5a22752c0af6f463b379ff50c5c3c"
@@ -146,6 +146,7 @@ Rails.application.config.sorcery.configure do |config|
   config.user_config do |user|
     user.authentications_class = Authentication
     user.reset_password_mailer = UserMailer
+    user.remember_me_for = 2209600
     # -- core --
     # specify username attributes, for example: [:username, :email].
     # Default: `[:email]`
