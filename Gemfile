@@ -41,7 +41,7 @@ gem "recaptcha", :require => "recaptcha/rails"
 group :development do
   gem 'pry'
   gem 'spring'
-  gem "bullet"
+  # gem "bullet"
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,0 +1,47 @@
+#user_actions_modal {
+
+  .modal-header {
+    background-color: #ff3c1f;
+    color: #e5e5e5;
+    text-align: center;
+  }
+
+  #password, #email {
+    width: 200px;
+  }
+
+  .actions {
+    margin-top: 15px;
+  }
+
+  .sign_in_button {
+    background-color: #ff3c1f;
+    color: #e5e5e5;
+  }
+
+  .left_part {
+    padding-left: 20px;
+    .checkbox {
+      display: inline;
+      margin-left: 7px;
+    }
+  }
+
+  .right_part {
+    img {
+      width: 90px;
+      height: 90px;
+      margin-top: 20px;
+    }
+    .connect_with {
+      text-align: center;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #333333;
+      font-weight: bold;
+    }
+  }
+
+
+}
