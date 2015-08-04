@@ -14,8 +14,9 @@
     <div class="field">
       <%= f.label :password_confirmation, 'Ще разок пароль' %>
       <%= f.password_field :password_confirmation, class: "form-control" %>
-      <%= recaptcha_tags %>
+
     </div>
+      <%= recaptcha_tags %>
     <div class="button_div">
       <%= button_tag 'Зареєструватись', class: "btn sign_up_button"%>
     </div>

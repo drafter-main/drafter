@@ -21,15 +21,6 @@ ActiveRecord::Schema.define(version: 20150601211111) do
     t.datetime "updated_at"
   end
 
-  create_table "comment_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id",   limit: 4, null: false
-    t.integer "descendant_id", limit: 4, null: false
-    t.integer "generations",   limit: 4, null: false
-  end
-
-  add_index "comment_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_udx", unique: true, using: :btree
-  add_index "comment_hierarchies", ["descendant_id"], name: "comment_desc_idx", using: :btree
-
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
     t.integer  "post_id",     limit: 4
@@ -50,9 +41,9 @@ ActiveRecord::Schema.define(version: 20150601211111) do
     t.string   "description",  limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "code",         limit: 255
     t.string   "content",      limit: 255
     t.string   "content_type", limit: 255
+    t.string   "code",         limit: 255
     t.boolean  "published",    limit: 1
   end
 
@@ -86,15 +77,15 @@ ActiveRecord::Schema.define(version: 20150601211111) do
     t.integer  "rating",                          limit: 4,   default: 0
     t.string   "nick",                            limit: 255
     t.boolean  "admin",                           limit: 1,   default: false
-    t.date     "banned_to",                                   default: '2015-04-06'
     t.string   "folder",                          limit: 255
+    t.date     "banned_to",                                   default: '2015-08-02'
     t.integer  "failed_logins_count",             limit: 4,   default: 0
     t.datetime "lock_expires_at"
     t.string   "unlock_token",                    limit: 255
+    t.string   "avatar",                          limit: 255
     t.string   "reset_password_token",            limit: 255
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
-    t.string   "avatar",                          limit: 255
     t.string   "remember_me_token",               limit: 255
     t.datetime "remember_me_token_expires_at"
   end
