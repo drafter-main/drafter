@@ -21,7 +21,6 @@ var PostBuilder = function(){
   this.post_description = "";
   this.post_content = "";
   this.post_type = "";
-  this.post_published = true;
 
   this.add_new_object = function(type){ create_new_object(type) };
   this.modify_alert = function() { alert("aaaaaaa") };
@@ -547,20 +546,6 @@ PostBuilder.Tags = function(PostBuilder) {
 
 PostBuilder.CreatePost = function(PostBuilder) {
 
-  function set_pablished_value(selected, disabled, value) {
-    selected.addClass("select-post-visible-button");
-    disabled.removeClass("select-post-visible-button");
-    PostBuilder.post_published = value;
-  }
-
-  $(document).on("click", "#hidden_post", function() {
-    set_pablished_value($(this), $("#visible_post"), false);
-  });
-
-  $(document).on("click", "#visible_post", function() {
-    set_pablished_value($(this), $("#hidden_post"), true);
-  });
-
   function collect_tags() {
     var labels = $("#tags .panel-body").find(".tag-label"),
         result = [];
@@ -579,16 +564,15 @@ PostBuilder.CreatePost = function(PostBuilder) {
     $("#new_post").find("#post_title").val(PostBuilder.post_title);
     $("#new_post").find("#post_description").val(PostBuilder.post_description);
     $("#new_post").find("#post_content_type").val(PostBuilder.post_type);
-    $("#new_post").find("#post_published").val(PostBuilder.post_published);
     $("#new_post").find("#post_tag_list").val(collect_tags());
     if (PostBuilder.post_type === "image") {
       html2canvas(document.getElementById("builder-canvas"), {
         onrendered: function(canvas) {
-          PostBuilder.post_content = canvas.toDataURL('image/png');
+          PostBuilder.post_content = canvas.toDataURL('image/jpg');
           $("#new_post").find("#post_content").val(PostBuilder.post_content);
           $("#new_post").submit();
         },
-        width: 600
+        width: 500
       });
     } else {
       PostBuilder.post_content = $("#builder-canvas").find(".video-element").attr("src");

@@ -8,37 +8,32 @@ class CommentsController < ApplicationController
     owner = current_user
     if owner.comments.where('created_at > ?', Time.now - 1.day).length > 60
        render json: {success: false, message: 'Перевищений ліміт'}
-    end
-    data = comment_params
-
-    if params[:comment][:parent_comment].length > 0 && parent = Comment.find_by(code: params[:comment][:parent_comment])
-      data[:parent_id] = parent.id
-      data[:receiver_id] = parent.user_id
-      data[:generation] = parent.generation
-    elsif params[:comment][:receiver]
-      receiver = check_receiver(params[:comment][:receiver])
-      data[:receiver_id] = check_receiver(params[:comment][:receiver]) if receiver
-    end
-    
-    @comment = owner.comments.new(data)
-    if @comment.save
-      res = { 
-        success: true, 
-        code: @comment.code, 
-        nick: owner.nick,
-        user_path: user_posts_user_path(owner.nick), 
-        avatar: get_avatar_thumb(owner) 
-      }
-      res[:receiver] = receiver_path(@comment) if @comment.receiver
-      render json: res
     else
-      render json: {success: false}
-    end
-  end
+      data = comment_params
+      current_post = Post.find_by_code(params[:comment][:post_comment])
+      data[:post_id] = current_post.id
 
-  def check_receiver(receiver)
-    param_nick = User.find_by_nick(receiver)
-    param_nick ? param_nick.id : false
+      if params[:comment][:parent_comment].length > 0 && parent = Comment.find_by(code: params[:comment][:parent_comment])
+        data[:parent_id] = parent.id
+        data[:receiver_id] = parent.user_id
+        data[:generation] = parent.generation
+      end
+      
+      @comment = owner.comments.new(data)
+      if @comment.save
+        res = { 
+          success: true, 
+          code: @comment.code, 
+          nick: owner.nick,
+          user_path: user_posts_user_path(owner.nick), 
+          avatar: get_avatar_thumb(owner) 
+        }
+        res[:receiver] = receiver_path(@comment) if @comment.receiver
+        render json: res
+      else
+        render json: {success: false}
+      end
+    end
   end
 
   def parent_comment
@@ -48,7 +43,7 @@ class CommentsController < ApplicationController
       res = {
         code: parent_comment.code, 
         rating: parent_comment.rating,
-        post: parent_comment.post.id,
+        post: parent_comment.post.code,
         vouted: {
           same_user: parent_comment.user.id == current_user.id, 
           status: current_user.voted_as_when_voted_for(parent_comment)
@@ -122,7 +117,7 @@ private
       res = {
         code: comment.code, 
         rating: comment.rating,
-        post: comment.post.id,
+        post: comment.post.code,
         vouted: {
           same_user: comment.user.id == current_user.id, 
           status: current_user.voted_as_when_voted_for(comment)
@@ -186,7 +181,7 @@ private
   end
  
   def comment_params
-    params.require(:comment).permit(:post_id, :com_body, :comment_img)
+    params.require(:comment).permit(:com_body, :comment_img)
   end
 
   def failed_response

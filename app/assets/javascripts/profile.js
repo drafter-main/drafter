@@ -6,6 +6,14 @@ $(document).ready(function(){
 var Profile = {}
 
 Profile.Settings = function() {
+  var $ImageCut = $("#image-cut"),
+      $selector = $ImageCut.find(".image-selector"),
+      start_x = 0,
+      start_y = 0,
+      mouse_def_x = 0,
+      mouse_def_y = 0,
+      resing = false;
+      new_avatar = document.getElementById("image-cut-foto");
 
   $('#left_nav a').click(function (e) {
     e.preventDefault();
@@ -13,11 +21,89 @@ Profile.Settings = function() {
     $(this).tab('show')
   });
 
+  function prepare_image_cut_modal(img_width, img_height) {
+    var $image_element = $ImageCut.find("#image-cut-foto"),
+        $image_block = $image_element.parent(),
+        image_block_width = (img_width > 568 ? 568 : img_width),
+        size_value = (img_width > 568 ? img_width / image_block_width : 1),
+        area = (img_width > 568 ? 284 : img_width / 2);
+
+    start_x = 0;
+    start_y = 0;
+    mouse_def_x = 0;
+    mouse_def_y = 0;
+
+    $selector.css("left", "auto");
+    $selector.css("top", 0 + "px");
+    $selector.attr("data-x", "0");
+    $selector.attr("data-y", "0");
+    $("#image_square").val("");
+
+    $image_block.css("width", image_block_width + "px");
+    $image_block.css("height", parseInt(img_height / size_value) + "px");
+    $image_block.attr("data-conf", size_value);  
+  }
+
+  $selector.draggable({ 
+    containment: ".image-cut-panel",
+    cancel : '.image-selector-resize',
+    drag: function(){
+            var scroll_x = $ImageCut.scrollLeft(),
+                scroll_y = $ImageCut.scrollTop(),
+                offset = $(this).offset(),
+                xPos = offset.left,
+                yPos = offset.top;
+
+            if (start_x == 0 && start_y == 0) {
+              start_x = xPos;
+              start_y = yPos + scroll_y;
+            } else {
+              $(this).attr("data-x", xPos - start_x);
+              $(this).attr("data-y", (yPos + scroll_y) - start_y);
+            }
+          } 
+  });
+
+  $(".image-cut-panel").mousemove(function( event ) {
+    if (resing) {
+      var s_width = parseInt($selector.css("width")),
+          s_height = parseInt($selector.css("height"));
+
+      if (mouse_def_x != 0 && event.pageX > mouse_def_x) {
+        s_width += event.pageX - mouse_def_x; 
+        s_height += event.pageX - mouse_def_x; 
+      } else if (mouse_def_x != 0 && event.pageX < mouse_def_x) {
+         s_width -= mouse_def_x - event.pageX;
+         s_height -= mouse_def_x - event.pageX;
+      }
+      
+      $selector.css("width", s_width + "px")
+      $selector.css("height", s_height + "px");
+      mouse_def_x = event.pageX;
+      mouse_def_y = event.pageY;   
+    }
+  });
+
+  $(".image-selector-resize").mousedown(function() {
+    resing = true;
+    mouse_def_x = 0;
+    mouse_def_y = 0;
+  });
+
+  $(document).mouseup(function() {
+    resing = false;
+  });
+
+  new_avatar.onload = function(){ prepare_image_cut_modal(this.width, this.height); }
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
         $('#avatar_preview').attr('src', e.target.result);
+        $("#image-cut-foto").attr('src', e.target.result);
+        $(".btn-file").find("span").text("Зображення");
+        $ImageCut.modal("show");
       }
       reader.readAsDataURL(input.files[0]); 
     }
@@ -25,6 +111,17 @@ Profile.Settings = function() {
 
   $(document).on("change", "#avatar", function(){
     readURL(this);
+  });
+
+  $(document).on("click", "#image-cut-submit", function(){
+    var square = [],
+        conf = parseFloat($(".image-cut-panel").attr("data-conf")).toFixed(1);
+    square.push(parseInt($selector.attr("data-x")) * conf);
+    square.push(parseInt($selector.attr("data-y")) * conf);
+    square.push(parseInt($selector.css("width")) * conf);
+    square.push(parseInt($selector.css("height")) * conf);
+    $("#image_square").val(square.join()); 
+    $ImageCut.modal("hide");
   });
 
 };
@@ -70,8 +167,8 @@ Profile.Comments = function() {
     if ($block.find("form").length) return;
     $form.attr("id", "form_" + numbers);
     $block.append($form);
-    $form.find("#parent_comment").val($block.attr("data-code"));
-    $form.find("#post_id").val($block.attr("data-post"));
+    $form.find(".comment-parent-comment").val($block.attr("data-code"));
+    $form.find(".comment-current-post").val($block.attr("data-post"));
     $form.removeClass('hidden');
     numbers++;
   });
@@ -80,11 +177,11 @@ Profile.Comments = function() {
     var $form = $(this).parents("form"),
         $attachment = $form.find(".from-comment-attachment"),
         data = {};
-    if (!$form.find("#com_body").val().length) return //need to refactor
+    if (!$form.find(".comment-com-body").val().length) return //need to refactor
     data = {
-      com_body: $form.find("#com_body").val(),
-      post_id: $form.find("#post_id").val(),
-      parent_comment: $form.find("#parent_comment").val()
+      com_body: $form.find(".comment-com-body").val(),
+      post_comment: $form.find(".comment-current-post").val(),
+      parent_comment: $form.find(".comment-parent-comment").val()
     };
     if ($attachment.attr("data-img").length) data.comment_img = $attachment.attr("data-img");
     button_loading.start($(this));

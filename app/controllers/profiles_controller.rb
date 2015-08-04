@@ -2,11 +2,11 @@ class ProfilesController < ApplicationController
   before_filter :require_login, :find_user, :set_title
 
   def my_posts
-    @posts = @user.posts
+    @posts = @user.posts.where(published: true)
   end
 
   def my_comments
-    @comments = @user.comments.includes(:post).order("created_at DESC")
+    @comments = @user.comments.joins(:post).merge(Post.where(published: true)).order("created_at DESC")
   end
 
   def up_voted
@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
     validate_change_params(params)
     @user.email = params['email']
     @user.nick = params['nick']
-    @user.avatar = save_user_avatar(params[:avatar], @user.folder, @user.avatar) if params[:avatar]
+    @user.avatar = save_user_avatar(params[:avatar], @user.folder, @user.avatar, params[:image_square]) if params[:avatar]
     @user.save(validate: false)
     redirect_to action: 'settings'
   end
@@ -95,8 +95,10 @@ class ProfilesController < ApplicationController
     @page_title = 'профайл'
   end
 
-  def save_user_avatar(image_data, folder, old_name)
+  def save_user_avatar(image_data, folder, old_name, square)
     image = Magick::Image.from_blob(image_data.read).first
+    resize = square.split(",")
+    image.crop!(resize[0].to_i, resize[1].to_i, resize[2].to_i, resize[3].to_i)
     image.resize_to_fit!(120)
     name = Digest::MD5.hexdigest(folder + Time.now.to_s) + "." + image.format
     image.write(Rails.root.join("public/content/avatars/" + folder + "/" + name))

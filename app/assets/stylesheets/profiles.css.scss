@@ -1,19 +1,167 @@
 .profile {
   .profile_head {
-    .avatar {
-      height: 120px;
-      width: 120px;
-      margin-left: auto;
-      margin-right: auto;
+    background-image: url(/assets/cities/chnu.png);
+    background-repeat: no-repeat;
+    padding-bottom: 70px;
+    
+    .profile-user-info {
+      height: 364px;
     }
-    .profile_info {
-      height: 100px;
+
+    .profile_head_panel {
+      height: 364px;
+      width: 1070px;
+      background-color: #000;
+      opacity: 0.6;
+      position: absolute;
+    }
+
+    .profile-panel-user-data {
+      height: 160px;
       width: 300px;
-      margin-left: auto;
-      margin-right: auto;
     }
-    .profile_navigation {
-      margin-bottom: 20px;
+
+    .avatar {
+      position: absolute;
+      height: 122px;
+      width: 122px;
+      margin-left: 50px;
+      margin-top: 220px;
+      background-color: #FFF;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+      border-radius: 100px;
+    }
+
+    .avatar-column {
+      position: absolute;
+      width: 1px;
+      height: 364px;
+      margin-left: 110px;
+      background-color: #FFF;
+    }
+
+    .profile-user-avatar-preview {
+      position: relative;
+      z-index: 2;
+      margin-left: 1px;
+      margin-top: 1px;
+    }
+    
+    .profile-user-data {
+      position: absolute;
+      margin-top: 220px;
+      margin-left: 200px;
+      height: 160px;
+      width: 800px;
+    }
+
+    .user_name {
+      margin-bottom: 10px;
+      font-size: 35px;
+      color: #FFF;
+    }
+
+    .profile-user-activity {
+       .profile-user-activity-item {
+         display: inline-block;
+         height: 50px;
+         color: #FFF;
+         padding-left: 10px;
+         padding-right: 10px;
+         border-right: 1px solid #FFF;
+         .glyphicon {
+           font-size: 25px;
+         }
+         .profile-user-activity-item-quantity {
+           text-align: center;
+           font-size: 20px;
+         }
+       }
+    }
+
+    .profile-user-navigation {
+      position: absolute;
+      margin-left: 90px;
+      margin-top: 20px;
+    }
+
+    .profile-user-navigation-item {
+      position: relative;
+      z-index: 3;
+      height: 40px;
+      width: 250px;
+    }
+
+    .profile-user-navigation-item:hover {
+      .navigation-item-circle {
+        margin-left: 8px;
+        margin-top: 8px;
+        width: 24px;
+        height: 24px;
+      }
+      a {
+        font-size: 18px;
+      }
+    }
+
+    .navigation-item-text-block {
+      position: absolute;
+      display: inline-block;
+      height: 40px;
+      a {
+        color: #FFF;
+        font-size: 17px;
+        margin-left: 20px;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      margin-top: 9px;
+    }
+
+    .navigation-item-circle-block {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      .navigation-item-circle {
+        position: absolute;
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 20px;
+        height: 20px;
+        border-radius: 100px;
+        background-color: #FFF;
+      }
+    }
+
+    .navigation-item-active {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .navigation-item-circle {
+        margin-left: 0;
+        margin-top: 0;
+        width: 40px;
+        height: 40px;
+      }
+      .navigation-item-text-block {
+        margin-top: 7px;
+      }
+      a {
+        font-size: 20px;
+      }
+    }
+
+    .navigation-item-active:hover {
+      .navigation-item-circle {
+        margin-left: 0;
+        margin-top: 0;
+        width: 40px;
+        height: 40px;
+      }
+      a {
+        font-size: 20px;
+      }
     }
   }
   .profile-user-comment {
@@ -28,6 +176,199 @@
   .profile-user-comment {
     form {
       margin-top: 10px;
+    }
+  }
+
+  .nav-justified > li, .nav-tabs.nav-justified > li {
+    width: auto;
+  }
+
+  .nav-justified, .nav-tabs.nav-justified {
+   width: auto;
+  }
+
+  #image-cut {
+  .image-cut-panel {
+    margin: 0 auto;
+  }
+    #image-cut-foto {
+      left: 0;
+      top: 0;
+      max-width: 568px;
+    }
+    .image-selector {
+      margin: 0 auto;
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background-color: #000;
+      opacity: 0.7;
+    }
+    .image-selector-resize {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: transparent;
+      border-right: 2px solid #FFF;
+      border-bottom: 2px solid #FFF;
+      right: -5px;
+      bottom: -5px;
+    }
+    .image-selector-resize:hover {
+      border-color: #ff3c1f;
+      cursor: nwse-resize;
+    }
+
+  }
+
+  .builder-modal {
+    .error-modal {
+      display: inline-block;
+      width: 30px;
+      position: absolute;
+      left: 0;
+      margin-left: 10px;
+      margin-top: 5px;
+    }
+
+    .modal-content {
+      border-radius: 0;
+      border: none;
+      width: 600px;
+    }
+    .modal-header {
+      background-color: #F85F64;
+      color: #FFF;
+      h4 { 
+        font-weight: bold;
+        margin-left: 16px;
+      }
+      margin-bottom: 10px;
+    }
+
+  }
+
+  .settings {
+    .nav-pills {
+      margin-top: 11px;
+      li.active {
+        a {
+          background-color : #FB464B;
+          color: #FFF;
+        }
+      }
+      li a{
+        border-radius: 0;
+        color: #879096;
+      }
+    }
+    .btn-primary {
+      background-color: #FB464B;
+      color: #FFF;
+      border-color: #FB464B;
+      border-radius: 0;
+      margin-bottom: 10px;
+    }
+    .btn-primary:hover {
+      background-color: #F85F64;
+      border-color: #F85F64; 
+    }
+    .btn-file {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+    }
+    .btn-file:hover {
+      background-color: #FFF;
+      color: #585E62;
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+    legend {
+      border: none;
+      font-size: 35px;
+      padding-left: 13px;
+    }
+    .control-label {
+      text-align: left;
+      padding-bottom: 5px;
+    }
+    input {
+      border-radius: 0;
+    }
+    .form-group {
+      padding-left: 31px;
+    }
+    #avatar {
+      height: 40px;
+    }
+    .profile-avatar-input {
+      padding-left: 10px;
+    }
+    .profile-avatar-description {
+      padding-top: 5px;
+      font-size: 12px;
+      color: #879096;
+    }
+    .profile-input-line {
+      display: inline-block;
+      width: 475px;
+    }
+    .connect-soccial-network-table {
+      padding-left: 15px;
+    }
+    .soccial-table-item {
+      padding-top: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #d9e0e2;
+      width: 475px;
+    }
+    .connect-soccial-item {
+      height: 70px;
+      padding-left: 20px;
+    }
+    .soccial-item-title {
+      display: inline-block;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .connect-icon {
+      display: inline-block;
+      float: left;
+      background-image: url(/assets/icons/soc.png);
+      width: 64px;
+      height: 64px;
+      margin-right: 10px;
+    }
+    .fb-icon {
+      background-position: -24px -20px;
+    }
+    .vk-icon {
+      background-position: -270px -20px;
+    }
+    .tw-icon {
+      background-position: -106px -20px;
+    }
+    .connect-button {
+      display: inline-block;
+      float: right;
+      margin-top: 13px;
+    } 
+    .warning_soc_networks {
+      color: #879096;
     }
   }
 

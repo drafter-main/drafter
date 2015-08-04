@@ -1,29 +1,82 @@
-<div class="profile_head text-center col-xs-12 ">
-  <div class="avatar">
-    ava
-  </div>
-  <div class="text-center profile_info">
-    <div class="user_name"><%= @user.nick %></div>
-    <div class="user_exists"><%= date_diff(@user.created_at) %> зареєстрований </div>
-    <div class="user_rating"><%= @user.rating %> рейтинг</div>
-    <div class="user_activity">
-      <span class="user_posts_q">постів <%= @user.posts.length %></span>
-      <span class="user_comments_q">коментів <%= @user.comments.length %></span>
+<div class="profile_head col-xs-12">
+  <div class="profile_head_panel"></div>
+  <div class="profile-user-info">
+    <div class="avatar">
+      <img class="profile-user-avatar-preview img-circle" width="120" src="<%= get_user_avatar(@user) %>"/>
     </div>
-    <div class="user_votes">
-      <span>поставив</span>
-      <span class="user_voted_p"><%= @votes.where(vote_flag: 1).length %> плюси</span>
-      <span class="user_voted_n"><%= @votes.where(vote_flag: 0).length %> мінуса</span>
+    <div class="avatar-column"></div>
+    <div class="profile-user-data">
+      <div class="user_name"><%= @user.nick %></div>
+      <div class="profile-user-activity">
+        <div class="profile-user-activity-item">
+          <span class="glyphicon glyphicon-stats"></span>
+          <span class="profile-user-activity-item-text">Рейтинг</span>
+          <div class="profile-user-activity-item-quantity"><%= @user.rating %></div>
+        </div>
+        <div class="profile-user-activity-item">
+          <span class="glyphicon glyphicon-file"></span>
+          <span class="profile-user-activity-item-text">Пости</span>
+          <div class="profile-user-activity-item-quantity"><%= @user.posts.length %></div>
+        </div>
+        <div class="profile-user-activity-item">
+          <span class="glyphicon glyphicon-comment"></span>
+          <span class="profile-user-activity-item-text">Коменти</span>
+          <div class="profile-user-activity-item-quantity"><%= @user.comments.length %></div>
+        </div>
+        <div class="profile-user-activity-item">
+          <span class="glyphicon glyphicon-thumbs-up"></span>
+          <span class="profile-user-activity-item-text">Аплодував</span>
+          <div class="profile-user-activity-item-quantity"><%= @votes.where(vote_flag: 1).length %></div>
+        </div>
+        <div class="profile-user-activity-item">
+          <span class="glyphicon glyphicon-thumbs-down"></span>
+          <span class="profile-user-activity-item-text">Проти</span>
+          <div class="profile-user-activity-item-quantity"><%= @votes.where(vote_flag: 0).length %></div>
+        </div>
+        <div class="profile-user-activity-item">
+          <span class="glyphicon glyphicon-calendar"></span>
+          <span class="profile-user-activity-item-text">На сайті</span>
+          <div class="profile-user-activity-item-quantity"><%= date_diff(@user.created_at) %></div>
+        </div>
+      </div>    
+    </div>
+    <div class="profile-user-navigation">
+      <div class="profile-user-navigation-item<%= active_page(1) %>">
+        <div class="navigation-item-circle-block">
+          <div class="navigation-item-circle"></div>
+        </div>
+        <div class="navigation-item-text-block">
+          <%= link_to 'Мої пости', my_posts_profiles_path %>
+        </div>
+      </div>
+      <div class="profile-user-navigation-item<%= active_page(2) %>">
+        <div class="navigation-item-circle-block">
+          <div class="navigation-item-circle"></div>
+        </div>
+        <div class="navigation-item-text-block">
+          <%= link_to 'Мої Коментарі', my_comments_profiles_path %>
+        </div>
+      </div>
+      <div class="profile-user-navigation-item<%= active_page(3) %>">
+        <div class="navigation-item-circle-block">
+          <div class="navigation-item-circle"></div>
+        </div>
+        <div class="navigation-item-text-block">
+          <%= link_to 'Вподобані пости', up_voted_profiles_path %>
+        </div>
+      </div>
+      <div class="profile-user-navigation-item<%= active_page(4) %>">
+        <div class="navigation-item-circle-block">
+          <div class="navigation-item-circle"></div>
+        </div>
+        <div class="navigation-item-text-block">
+          <%= link_to 'Налаштування', settings_profiles_path %>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="profile_navigation">
-    <ul class="nav nav-pills nav-justified">
-      <li role="presentation" class="active"><%= link_to 'Мої пости', my_posts_profiles_path %></li>
-      <li role="presentation"><%= link_to 'Мої Коментарі', my_comments_profiles_path %></li>
-      <li role="presentation"><%= link_to 'Вподобані пости', up_voted_profiles_path %></li>
-      <li role="presentation"><%= link_to 'Налаштування', settings_profiles_path %></li>
-    </ul>
-  </div>
+
   <div id="nav">
     <p id="notice"><%= flash[:notice] %></p>
     <p id="alert"><%= flash[:alert] %></p>
