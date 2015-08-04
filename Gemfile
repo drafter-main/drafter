@@ -23,6 +23,8 @@ gem 'acts-as-taggable-on', '~> 3.4'
 # rating
 gem 'acts_as_votable', '~> 0.10.0'
 
+gem "jquery-validation-rails"
+
 # search
 gem 'sunspot_rails'
 # hz production
@@ -41,6 +43,7 @@ gem "recaptcha", :require => "recaptcha/rails"
 group :development do
   gem 'pry'
   gem 'spring'
+  # gem "bullet"
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

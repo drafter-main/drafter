@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427183032) do
+ActiveRecord::Schema.define(version: 20150601211111) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -20,15 +20,6 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "comment_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id",   limit: 4, null: false
-    t.integer "descendant_id", limit: 4, null: false
-    t.integer "generations",   limit: 4, null: false
-  end
-
-  add_index "comment_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_udx", unique: true, using: :btree
-  add_index "comment_hierarchies", ["descendant_id"], name: "comment_desc_idx", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
@@ -40,6 +31,8 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.boolean  "banned",      limit: 1,   default: false
     t.string   "code",        limit: 255
     t.string   "comment_img", limit: 255
+    t.integer  "receiver_id", limit: 4
+    t.integer  "generation",  limit: 4
   end
 
   create_table "posts", force: :cascade do |t|
@@ -70,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150427183032) do
   create_table "tags", force: :cascade do |t|
     t.string  "name",           limit: 255
     t.integer "taggings_count", limit: 4,   default: 0
+    t.string  "slug",           limit: 255
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
@@ -83,18 +77,21 @@ ActiveRecord::Schema.define(version: 20150427183032) do
     t.integer  "rating",                          limit: 4,   default: 0
     t.string   "nick",                            limit: 255
     t.boolean  "admin",                           limit: 1,   default: false
-    t.date     "banned_to",                                   default: '2015-04-06'
     t.string   "folder",                          limit: 255
+    t.date     "banned_to",                                   default: '2015-08-02'
     t.integer  "failed_logins_count",             limit: 4,   default: 0
     t.datetime "lock_expires_at"
     t.string   "unlock_token",                    limit: 255
+    t.string   "avatar",                          limit: 255
     t.string   "reset_password_token",            limit: 255
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
-    t.string   "avatar",                          limit: 255
+    t.string   "remember_me_token",               limit: 255
+    t.datetime "remember_me_token_expires_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_me_token"], name: "index_users_on_remember_me_token", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", using: :btree
 

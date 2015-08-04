@@ -67,4 +67,5 @@ get "oauth/:provider" => "oauths#oauth", :as => :auth_at_provider
 get 'login' => 'user_sessions#new', :as => :login
 post 'logout' => 'user_sessions#destroy', :as => :logout
 
+get '*path', to: redirect('/')
 end

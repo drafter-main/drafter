@@ -1,0 +1,36 @@
+.register_form {
+  width: 400px;
+  margin: auto;
+  margin-top:5%;
+  .register_head {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #ff3c1f;
+    color: #e5e5e5;
+    margin-bottom: 10px;
+
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    min-height: 16.42857143px;
+  }
+  input {
+    width: 70%;
+  }
+  .field {
+    margin-left: 23%;
+  }
+  .sign_up_button {
+    background-color: #ff3c1f;
+    color: #e5e5e5;
+  }
+  .button_div {
+    text-align: center;
+  }
+
+  .g-recaptcha {
+    text-align: center;
+    margin: 10px 0 10px 50px;
+  }
+}

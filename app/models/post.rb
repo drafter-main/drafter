@@ -6,6 +6,8 @@ class Post < Base
   acts_as_votable
 
   validates_presence_of :user_id
+  validates :title, presence: true, length: { in: 3..30 }
+  validates :description, length: { in: 0..30 }
 
   searchable do
     text :title, :boost => 5

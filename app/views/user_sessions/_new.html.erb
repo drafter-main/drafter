@@ -1,24 +1,39 @@
-<h1>Login</h1>
 <% @user = User.new %>
-<%= form_tag user_sessions_path, :method => :post do %>
-  <div class="field">
-    <%= label_tag :email %><br />
-    <%= text_field_tag :email %>
-  </div>
-  <div class="field">
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </div>
-  <div class="actions">
-    <%= submit_tag "Login" %>
-  </div>
-<% end %>
+<div class="col-xs-6 left_part">
+  <%= form_tag user_sessions_path, :method => :post do %>
+    <div class="field">
+      <%= label_tag :email, 'Емейл' %>
+      <%= text_field_tag :email, nil, class: "form-control" %>
+    </div>
+    <br>
+    <div class="field">
+      <%= label_tag :password, 'Пароль' %>
+      <%= password_field_tag :password, nil, class: "form-control" %>
+    </div>
+    <div class="actions">
+      <%= button_tag 'Увійти', class: "btn sign_in_button"%>
+      <span class="checkbox">
+        <label>
+          <input type="checkbox" name="remember" id="remember"> Запам'ятати мене
+        </label>
+      </span>
+    </div>
+  <% end %>
+  <%= link_to 'Забув пароль?', new_password_reset_path %>
+  <%= link_to "Зареєструватись", new_user_path, class: " register_link" %>
+</div>
 
-<div style="margin-top: 20px;">
-  <%= link_to 'Залогінитись з VK', auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %> |
-  <%= link_to 'Залогінитись з Facebook', auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
+<div class="col-xs-6 right_part">
+  <div class="connect_with">Увійдіть з</div>
+  <div class="col-xs-12">
+    <%= link_to auth_at_provider_path(:provider => :vk), class: "vk"  do %>
+      <%= image_tag("social_networks_icons/vk.jpg", :alt => "vk", :class => "vk_image") %>
+    <% end %>
+    <%= link_to auth_at_provider_path(:provider => :facebook), class: ""  do %>
+      <%= image_tag("social_networks_icons/fb.jpg", :alt => "fb", :class => "fb_image") %>
+    <% end %>
+    <%= link_to auth_at_provider_path(:provider => :twitter), class: ""  do %>
+      <%= image_tag("social_networks_icons/tw.jpg", :alt => "tw", :class => "tw_image") %>
+    <% end %>
+  </div>
 </div>
-<div style="margin-top: 20px;">
-  <%= link_to "Зареєструватись", new_user_path, class: "btn btn-success" %>
-</div>
-<%= link_to 'Забув пароль?', new_password_reset_path %>
