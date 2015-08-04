@@ -24,6 +24,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by_code(params[:id])
+    redirect_to root_path unless @post.published
     @comments = Comment.includes(:user).where(post_id: @post.id).order("created_at desc").group_by(&:generation)
     @comments_count = comments_count(@comments)
   end
@@ -39,12 +40,12 @@ class PostsController < ApplicationController
     end
 
     data = post_params
-    data[:published] = to_boolean(data[:published])
+    data[:published] = true
     data[:content]= save_post_image(data[:content], user.folder) if data[:content_type] == "image"
     @post = user.posts.new(data)
 
     if @post.save
-      redirect_to(root_url, notice: 'Post was successfully created')
+      redirect_to(@post, notice: 'Post was successfully created')
     else
       redirect_to action: :new
     end
@@ -143,16 +144,23 @@ class PostsController < ApplicationController
 
   def save_post_image(image, folder)
     users_root =  Rails.root.join("public/content/posts/" + folder + "/")
-    name = Digest::MD5.hexdigest(folder + Time.now.to_s) + ".png"
-    image_data = Base64.decode64(image['data:image/png;base64,'.length .. -1])
-    File.open(users_root + name, 'wb') do|f|
-      f.write image_data
+    name = Digest::MD5.hexdigest(folder + Time.now.to_s) + ".jpg"
+    image_data = Magick::Image.from_blob(Base64.decode64(image['data:image/jpg;base64,'.length .. -1])).first
+
+    image_data.format = "JPEG"
+    size = image_data.filesize / 1024
+    
+    if size > 600 
+      image_data.write(users_root + name) {self.quality = 80}
+    else
+      image_data.write(users_root + name) 
     end
+    
     folder + "/" + name
   end
 
   def post_params
-    params.require(:post).permit(:title, :description, :content, :content_type, :tag_list, :published)
+    params.require(:post).permit(:title, :description, :content, :content_type, :tag_list)
   end
 
   def comments_count(comments_group)

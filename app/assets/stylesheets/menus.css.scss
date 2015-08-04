@@ -7,8 +7,7 @@
   border: none;
 
   #logo {
-  margin-right: 15px;
-  margin-top: 8px;
+    margin-right: 15px;
   }
 
   .bottom_line {
@@ -21,36 +20,42 @@
 
   .left_buttons li {
     padding: 0 10px 0 10px;
-	a, span {
-      cursor: pointer;
-	  color: #879096;
-      background-color: #FFF;
-	  font-size: 16px;
-	  line-height: 48px;
-	  padding: 0;
-	  display: block;
-	  font-family: 'Fjalla One',sans-serif;
-	  font-weight: 400;
-	  text-transform: uppercase;
-	}
+  	a, span {
+        cursor: pointer;
+  	  color: #879096;
+        background-color: #FFF;
+  	  font-size: 16px;
+  	  line-height: 50px;
+  	  padding: 0;
+  	  display: block;
+  	  font-family: 'Fjalla One',sans-serif;
+  	  font-weight: 400;
+  	  text-transform: uppercase;
+  	}
 
-	a:hover {
-	  color: #ff3c1f;
-	  background-color: #FFF;
-	  border-bottom: 2px solid #ff3c1f;
-	}
+  	a:hover {
+  	  color: #ff3c1f;
+  	  background-color: #FFF;
+  	  border-bottom: 2px solid #ff3c1f;
+  	}
 
   }
 
   .left_buttons li.active {
-	a {
-	  color: #ff3c1f;
-	  border-bottom: 2px solid #ff3c1f;
-	}
+  	a {
+  	  color: #ff3c1f;
+  	  border-bottom: 2px solid #ff3c1f;
+  	}
+  }
+  
+  .navbar-right {
+    margin-right: 0;
   }
 
   .navbar-right li {
-
+    .glyphicon-search {
+      top: 4px;
+    }
     #search {
       width: 150px;
       display: inline-block;
@@ -78,7 +83,6 @@
       #search_form {
         display: none;
         width: 220px;
-
         height: 50px;
       }
 

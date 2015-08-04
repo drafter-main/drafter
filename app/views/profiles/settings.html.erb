@@ -9,86 +9,118 @@
     <div class="tab-content">
         <div class="settings_profile tab-pane active col-xs-9" id="profile">
           <%= form_tag(change_settings_profiles_path, :class => 'form-horizontal', :multipart => true) do %>
+            <%= field_set_tag "Профіль" do %>
               <div class="form-group">
-                <label class="control-label col-xs-3" for="avatar">Аватар:</label>
+                <label class="control-label col-xs-11" for="avatar">Аватар</label>
                 <div class="col-xs-2">
                   <img id="avatar_preview" width="120" src="<%= get_user_avatar(@user) %>"/>
                 </div>
-                <div class="col-xs-4">
-                  <input type="file" id="avatar" class="form-control" name="avatar">
+                <div class="col-xs-4 profile-avatar-input">
+                  <span class="btn btn-default btn-file"><span>Вибрати</span><input type="file" id="avatar" class="form-control" name="avatar"></span>
+                  <div class="profile-avatar-description">PNG або JPG, максимальний розмір: 2MB</div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-xs-3" for="nick">Нік:</label>
-                <div class="col-xs-8">
+                <label class="control-label col-xs-11" for="nick">Нік</label>
+                <div class="profile-input-line">
                   <input type="text" class="form-control" id="nick" placeholder="Введіть нік" name="nick" value="<%= @user.nick%>">
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-xs-3" for="email">Електронна пошта:</label>
-                <div class="col-xs-8">
+                <label class="control-label col-xs-11" for="email">Електронна пошта</label>
+                <div class="profile-input-line">
                   <input type="email" class="form-control" id="email" placeholder="Введіть електронну пошту"
                          name="email" value=" <%= @user.email%> ">
                 </div>
               </div>
+              <input type="hidden" id="image_square" name="image_square" value="">
               <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-9">
+                <div class="col-xs-8">
                   <button type="submit" class="btn btn-primary">Змінити</button>
                 </div>
               </div>
+            <% end %>  
           <% end %>
+          <%= render 'image_cut'%>
         </div>
 
         <div class="settings_reset tab-pane col-xs-9" id="password">
           <%= form_tag(change_password_profiles_path, :class => 'form-horizontal') do %>
+            <%= field_set_tag "Змінити пароль" do %>
               <% if @user.crypted_password%>
                   <div class="form-group">
-                    <label class="control-label col-xs-3" for="old-pass">Старий пароль:</label>
-                    <div class="col-xs-8">
-                      <input type="password" class="form-control" id="old-pass" placeholder="Введіть старий пароль" name="old-pass">
+                    <label class="control-label col-xs-11" for="old-pass">Поточний пароль</label>
+                    <div class="profile-input-line">
+                      <input type="password" class="form-control" id="old-pass" placeholder="Введіть поточний пароль" name="old-pass">
                     </div>
                   </div>
               <% else %>
                   <div class="pass_warn">введіть пароль(у вас його тіпа нема)</div>
               <% end %>
               <div class="form-group">
-                <label class="control-label col-xs-3" for="new-pass">Новий пароль:</label>
-                <div class="col-xs-8">
+                <label class="control-label col-xs-11" for="new-pass">Новий пароль</label>
+                <div class="profile-input-line">
                   <input type="password" class="form-control" id="new-pass" placeholder="Введіть новий пароль" name="new-pass">
                 </div>
               </div>
               <div class="form-group">
-                <label class="control-label col-xs-3" for="new-pass-confirm">Новий пароль:</label>
-                <div class="col-xs-8">
+                <label class="control-label col-xs-11" for="new-pass-confirm">Повторіть новий пароль</label>
+                <div class="profile-input-line">
                   <input type="password" class="form-control" id="new-pass-confirm" placeholder="Введіть новий пароль" name="new-pass-confirm">
                 </div>
               </div>
               <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-9">
+                <div class="col-xs-8">
                   <button type="submit" class="btn btn-primary">Змінити</button>
                 </div>
               </div>
+            <% end %>
           <% end %>
         </div>
 
         <div class="settings_social tab-pane col-xs-9" id="social">
-          <div class="warning_soc_networks">
-            тіпа прогрес втратиться на старому аккаунті і тд...
-          </div>
-          <div class="connect_fb">
-            <% if @fb.empty? %>
-                <%= link_to "Під'єднати Facebook", auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
-            <% else %>
-                <%= link_to "Від'єднати Facebook", social_net_ctrl_profiles_path( remove: 'fb') %>
-            <% end %>
-          </div>
-          <div class="connect_vk">
-            <% if @vk.empty? %>
-                <%= link_to "Під'єднати VK", auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %>
-            <% else %>
-                <%= link_to "Від'єднати VK", social_net_ctrl_profiles_path( remove: 'vk') %>
-            <% end %>
-          </div>
+          <%= field_set_tag "Під'єднати соціальні мережі" do %>
+            <div class="connect-soccial-network-table">
+              <div class="warning_soc_networks">
+                Під'єднайте ваші соціальні аккаунти, щоб мати змогу виконувати<br>вхід на сайт з їхньою допомогою.
+              </div>
+              <div class="soccial-table-item">
+                <div class="connect-soccial-item">
+                  <i class="connect-icon fb-icon"></i>
+                  <div class="soccial-item-title">Під'єднати ваший Facebook аккаунт</div>
+                  <div class="connect-button">
+                    <% if @fb.empty? %>
+                      <%= link_to "Під'єднати", auth_at_provider_path(:provider => :facebook), class: "btn btn-primary" %>
+                    <% else %>
+                      <%= link_to "Від'єднати", social_net_ctrl_profiles_path( remove: 'fb'), class: "btn btn-primary" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="soccial-table-item">
+                <div class="connect-soccial-item">
+                  <i class="connect-icon vk-icon"></i>
+                  <div class="soccial-item-title">Під'єднати ваший VK аккаунт</div>
+                  <div class="connect-button">
+                    <% if @vk.empty? %>
+                      <%= link_to "Під'єднати", auth_at_provider_path(:provider => :vk), class: "btn btn-primary" %>
+                    <% else %>
+                      <%= link_to "Від'єднати", social_net_ctrl_profiles_path( remove: 'vk'), class: "btn btn-primary" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="soccial-table-item">
+                <div class="connect-soccial-item">
+                  <i class="connect-icon tw-icon"></i>
+                  <div class="soccial-item-title">Під'єднати ваший Twitter аккаунт</div>
+                  <div class="connect-button">
+                      <%= link_to "Під'єднати", "javascript:void(0);", class: "btn btn-primary" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
     </div>
   </div>

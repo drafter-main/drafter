@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def user_comments
-    @comments = @user.comments
+    @posts = Post.uniq.joins(:comments).where("comments.user_id = ?", @user.id)
   end
 
   def user_likes

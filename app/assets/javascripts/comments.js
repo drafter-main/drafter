@@ -52,13 +52,11 @@ Comments.Comment = function() {
       return false;
     }
     var $attachment = form.find(".from-comment-attachment"),
-        receiver = form.find(".receiver_comment").val(),
         data = {
-          com_body: form.find("#com_body").val(),
-          post_id: form.find("#post_id").val(),
-          parent_comment: form.find("#parent_comment").val()
+          com_body: form.find(".comment-com-body").val(),
+          post_comment: form.find(".comment-current-post").val(),
+          parent_comment: form.find(".comment-parent-comment").val()
         };
-    if (!reply && receiver.length) data.receiver = receiver.substring(1,substr.length-1);
     if ($attachment.attr("data-img").length) data.comment_img = $attachment.attr("data-img");
 
     button_loading.start(button);
@@ -88,9 +86,8 @@ Comments.Comment = function() {
     var form = $("#add_new_comment").find("form").clone();
     form.attr("id", "form_" + comment_form_count);
     comment_form_count++;
-    form.find("#com_body").val("");
-    form.find("#parent_comment").val(item.attr('data-comment'));
-    form.find(".receiver_comment").val(item.find(".comment_owner a").html());
+    form.find(".comment-com-body").val("");
+    form.find(".comment-parent-comment").val(item.attr('data-comment'));
     form.addClass("col-xs-offset-1");
     item.append(form);
   }
@@ -132,8 +129,10 @@ Comments.Comment = function() {
   function replace_form_to_block(item, response, data) {
     delete_reply_form(item);
     var block = build_block(response, data);
-    if (!item.next().hasClass("replies")) $("<div class='replies'></div>").insertAfter(item);
-    item.next().prepend(block);
+    if (!item.parents(".replies").length) {
+      if (!item.next().hasClass("replies")) $("<div class='replies'></div>").insertAfter(item);
+      item.next().prepend(block);
+    } else item.parents(".replies").prepend(block);
   }
 
   function add_first_level_block(response, data) {
