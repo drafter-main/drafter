@@ -20,14 +20,14 @@
     <div class="tags_popular row">
       <h5>Популярні теги</h5>
       <hr>
-      <% @tags.each do |tag| %>
+      <% #@tags.each do |tag| %>
         <div class="tag_unit">
-          <a href='<%= tag_path(tag) %>'>
-            <span class="tag_name"><%= tag.name %></span>
-            <span class="tag_quantity"><%= tag.taggings_count %></span>
+          <a href='<%#= tag_path(tag.name) %>'>
+            <span class="tag_name"><%#= tag.name %></span>
+            <span class="tag_quantity"><%#= tag.taggings_count %></span>
           </a>
         </div>
-      <% end %>
+      <% #end %>
     </div>
     <div class="banner row" style="margin-top: 30px;">
       Хуянер

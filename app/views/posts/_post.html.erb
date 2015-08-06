@@ -21,7 +21,7 @@
     <span class="amount_comments"><strong><%= comments_notification(@comments_count ? @comments_count : post.comments.count)  %></strong></span>
       <span class="post_tags">
         <% post.tags.each do |tag|%>
-         <%= link_to tag.name, tag_path(tag), class: 'tag_post_index' %>
+         <%= link_to tag.name, tag_path(tag.name), class: 'tag_post_index' %>
         <% end %>
       </span>
   </div>

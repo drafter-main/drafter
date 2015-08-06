@@ -15,7 +15,7 @@
           </span>
           <ul class="dropdown-menu" role="menu">
             <% @tags.each do |tag| %>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= tag_path(tag) %>"><%= tag.name %></a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= tag_path(tag.name) %>"><%= tag.name %></a></li>
             <% end %>
           </ul>
         </li>
