@@ -1,7 +1,4 @@
 .post {
-  [data-active="false"] {
-    color: #ff3c1f;
-  }
   .post_title {
     font-size: 35px;
     a {
@@ -32,10 +29,15 @@
     }
   }
   .post_bottom_2 {
+    display: table;
     margin-left: 5px;
     font-size: 20px;
     .margin_glyphicon{
       margin-left: 20px;
+    }
+    .social-likes {
+      display: table-cell;
+      vertical-align: middle;
     }
   }
 }

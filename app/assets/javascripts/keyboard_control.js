@@ -40,6 +40,6 @@ keyboardControl = function(){
         break;
     }
   });
-}
+};
 
 init_key_con = new keyboardControl;

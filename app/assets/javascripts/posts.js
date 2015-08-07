@@ -13,7 +13,7 @@ Posts = function() {
     }
   }
 
-  $('.plus').on('click', function(){
+  $('.plus_rating').on('click', function(){
       if ($("#active_user").length && $("#active_user").val() == "false") {
         show_login_modal_if_error();
         return false;
@@ -35,7 +35,7 @@ Posts = function() {
       } else neutral_vote(self);
   });
 
-  $('.minus').on('click', function(){
+  $('.minus_rating').on('click', function(){
       if ($("#active_user").length && $("#active_user").val() == "false") {
         show_login_modal_if_error();
         return false;
@@ -59,14 +59,14 @@ Posts = function() {
 
   function change_rating(self) {
     var rating_div = self.closest('.post').find('.rating_post strong'),
-        rating_val = parseInt(rating_div.html());
-    if (self.hasClass('glyphicon-thumbs-up')){
-        if (self.next().attr('data-active') == 'false') rating_div.html(rating_val + 2);
-        else if (self.attr('data-active') == 'true') rating_div.html(rating_val + 1);
+        rating_val = parseInt(rating_div.text());
+    if (self.hasClass('image_claps')){
+        if (self.next().attr('data-active') == 'false') rating_div.text(rating_val + 2);
+        else if (self.attr('data-active') == 'true') rating_div.text(rating_val + 1);
         else rating_div.html(rating_val + -1);
     } else {
-        if (self.prev().attr('data-active') == 'false') rating_div.html(rating_val - 2);
-        else if (self.attr('data-active') == 'true') rating_div.html(rating_val - 1);
+        if (self.prev().attr('data-active') == 'false') rating_div.text(rating_val - 2);
+        else if (self.attr('data-active') == 'true') rating_div.text(rating_val - 1);
         else rating_div.html(rating_val + 1);
     }
   }
@@ -84,9 +84,20 @@ Posts = function() {
       success: function(response) {
         if (response && response.success) {
           update_class_neutral_vote(el);
+          change_neutral_rating(el);
         } else show_login_modal_if_error();
       }
     });
+  }
+
+  function change_neutral_rating(self) {
+    var rating_div = self.closest('.post').find('.rating_post strong'),
+      rating_val = parseInt(rating_div.text());
+    if (self.hasClass('image_claps')){
+      rating_div.html(rating_val - 1);
+    } else {
+      rating_div.html(rating_val + 1);
+    }
   }
 
   function update_class_neutral_vote(el) {
