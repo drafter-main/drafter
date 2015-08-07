@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.nick = "nick"
     if verify_recaptcha && @user.save
       auto_login(@user)
       redirect_to(root_url, notice: 'Юзер створений')

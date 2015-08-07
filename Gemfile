@@ -23,8 +23,6 @@ gem 'acts-as-taggable-on', '~> 3.4'
 # rating
 gem 'acts_as_votable', '~> 0.10.0'
 
-gem "jquery-validation-rails"
-
 # search
 gem 'sunspot_rails'
 # hz production

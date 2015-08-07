@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  if ($('.profile').length) new Profile.Settings();
+  if ($('#profile_settings').length) new Profile.Settings();
   if ($('#profile_comments').length) new Profile.Comments();
 });
 

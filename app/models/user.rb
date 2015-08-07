@@ -23,11 +23,8 @@ class User < ActiveRecord::Base
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
 
   before_create do
-    make_user_dir
-  end
-
-  before_validation do
     set_nick
+    make_user_dir
   end
 
   def to_param
