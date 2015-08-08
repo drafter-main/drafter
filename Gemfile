@@ -30,6 +30,8 @@ group :development do
   gem 'sunspot_solr'
 end
 
+# translit
+gem 'translit', git: 'https://github.com/kravchuk-ievgenii/translit'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

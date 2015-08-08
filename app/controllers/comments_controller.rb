@@ -81,14 +81,14 @@ class CommentsController < ApplicationController
     find_user_and_comment
     update_user_rating_up_vote
     @comment.vote_by :voter => @user, :vote => 'up'
-    render json: {success: true}
+    render json: {success: true, rating: @comment.rating}
   end
 
   def down_vote
     find_user_and_comment
     update_user_rating_down_vote
     @comment.vote_by :voter => @user, :vote => 'down'
-    render json: {success: true}
+    render json: {success: true, rating: @comment.rating}
   end
 
   def neutral_vote
@@ -98,7 +98,7 @@ class CommentsController < ApplicationController
       update_user_rating_neutral_vote
       vote.destroy
     end
-    render json: {success: true}
+    render json: {success: true, rating: @comment.rating}
   end
 
   # only ban comment

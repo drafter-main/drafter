@@ -6,9 +6,9 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
       <ul class="nav navbar-nav left_buttons">
-        <li class="active"><a href="<%= root_path %>">Гаряче</a></li>
-        <li><a href="<%= best_posts_path %>">Найкраще</a></li>
-        <li><a href="<%= most_recent_posts_path %>">Нове</a></li>
+        <li class= <%= "active" if current_page?(controller: 'posts', action: 'index') %> ><a href="<%= root_path %>">Гаряче</a></li>
+        <li class= <%= "active" if current_page?(controller: 'posts', action: 'best') %> ><a href="<%= best_posts_path %>">Найкраще</a></li>
+        <li class= <%= "active" if current_page?(controller: 'posts', action: 'most_recent') %> ><a href="<%= most_recent_posts_path %>">Нове</a></li>
         <li>
           <span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
             Більше

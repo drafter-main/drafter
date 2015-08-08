@@ -59,14 +59,14 @@ class PostsController < ApplicationController
     find_user_and_post
     update_user_rating_up_vote
     @post.vote_by :voter => @user, :vote => 'up'
-    render json: {success: true}
+    render json: {success: true, rating: @post.rating}
   end
 
   def down_vote
     find_user_and_post
     update_user_rating_down_vote
     @post.vote_by :voter => @user, :vote => 'down'
-    render json: {success: true}
+    render json: {success: true, rating: @post.rating}
   end
 
   def neutral_vote
@@ -76,7 +76,7 @@ class PostsController < ApplicationController
        update_user_rating_neutral_vote
        vote.destroy
     end
-    render json: {success: true}
+    render json: {success: true, rating: @post.rating}
   end
 
   def destroy

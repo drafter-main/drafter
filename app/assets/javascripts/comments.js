@@ -159,7 +159,7 @@ Comments.Comment = function() {
             url: "/comments/up_vote",
             success: function(response) {
               if (response && response.success) {
-                change_rating(self);
+                change_rating(self, response.rating);
                 update_class_up_vote(self);
               } else show_login_modal_if_error();
             }
@@ -181,7 +181,7 @@ Comments.Comment = function() {
             url: "/comments/down_vote",
             success: function(response) {
               if (response && response.success) {
-                change_rating(self);
+                change_rating(self, response.rating);
                 update_class_down_vote(self);
               } else show_login_modal_if_error();
             }
@@ -189,37 +189,28 @@ Comments.Comment = function() {
         } else neutral_vote(self);
     });
 
-    function change_rating(self) {
-        var rating_div = self.closest('.comment_item').find('.rating_comment'),
-            rating_val = parseInt(rating_div.html());
-        if (self.hasClass('glyphicon-thumbs-up')){
-            if (self.next().attr('data-active') == 'false') rating_val += 2;
-            else if (self.attr('data-active') == 'true') rating_val += 1;
-            else rating_val -= 1;
-        } else {
-            if (self.prev().attr('data-active') == 'false') rating_val -= 2;
-            else if (self.attr('data-active') == 'true') rating_val -= 1;
-            else rating_val += 1;
-        }
-        rating_div.html(rating_val == 1 ? rating_val + " оплеск" : rating_val + " оплесків");
+  function neutral_vote(el) {
+    if ($("#active_user").length && $("#active_user").val() == "false") {
+      show_login_modal_if_error();
+      return false;
     }
+    code = el.attr('data');
+    $.ajax({
+      type: 'Put',
+      data: {code: code},
+      url: "/comments/neutral_vote",
+      success: function(response) {
+        if (response && response.success) {
+          change_rating(self, response.rating);
+          update_class_neutral_vote(el);
+        } else show_login_modal_if_error();
+      }
+    });
+  }
 
-    function neutral_vote(el) {
-      if ($("#active_user").length && $("#active_user").val() == "false") {
-        show_login_modal_if_error();
-        return false;
-      } 
-      code = el.attr('data');
-      $.ajax({
-        type: 'Put',
-        data: {code: code},
-        url: "/comments/neutral_vote",
-        success: function(response) {
-          if (response && response.success) {
-            update_class_neutral_vote(el);
-          } else show_login_modal_if_error();
-        }
-      });
+    function change_rating(self, rating) {
+        var rating_div = self.closest('.comment_item').find('.rating_comment');
+        rating_div.text(rating == 1 ? rating + " оплеск" : rating + " оплесків");
     }
 
     function update_class_neutral_vote(el) {

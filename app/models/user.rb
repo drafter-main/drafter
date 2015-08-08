@@ -44,7 +44,10 @@ class User < ActiveRecord::Base
 
   def set_nick
     @nick = email.split('@').first.downcase[0..6]
-    @nick = @nick.gsub(/[^0-9A-Za-z]/, '')
+    @nick.gsub!(/[^0-9A-Za-z]/, '')
+    if @nick.empty?
+      @nick = Translit.convert(email, :english)[0..6]
+    end
     check_nick(@nick)
     self.nick = @nick
   end

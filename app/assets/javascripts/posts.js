@@ -27,7 +27,7 @@ Posts = function() {
           url: "/posts/up_vote",
           success: function(response) {
             if (response && response.success) {
-              change_rating(self);
+              change_rating(self, response.rating);
               update_class_up_vote(self);
             } else show_login_modal_if_error();
           }
@@ -49,7 +49,7 @@ Posts = function() {
           url: "/posts/down_vote",
           success: function(response) {
             if (response && response.success) {
-              change_rating(self);
+              change_rating(self, response.rating);
               update_class_down_vote(self);
             } else show_login_modal_if_error();
           }
@@ -57,18 +57,9 @@ Posts = function() {
       } else neutral_vote(self);
   });
 
-  function change_rating(self) {
-    var rating_div = self.closest('.post').find('.rating_post strong'),
-        rating_val = parseInt(rating_div.text());
-    if (self.hasClass('image_claps')){
-        if (self.next().attr('data-active') == 'false') rating_div.text(rating_val + 2);
-        else if (self.attr('data-active') == 'true') rating_div.text(rating_val + 1);
-        else rating_div.html(rating_val + -1);
-    } else {
-        if (self.prev().attr('data-active') == 'false') rating_div.text(rating_val - 2);
-        else if (self.attr('data-active') == 'true') rating_div.text(rating_val - 1);
-        else rating_div.html(rating_val + 1);
-    }
+  function change_rating(self, rating) {
+    var rating_div = self.closest('.post').find('.rating_post strong')
+    rating_div.text(rating == 1 ? rating + " оплеск" : rating + " оплесків");
   }
 
   function neutral_vote(el) {
@@ -84,20 +75,10 @@ Posts = function() {
       success: function(response) {
         if (response && response.success) {
           update_class_neutral_vote(el);
-          change_neutral_rating(el);
+          change_rating(self, response.rating);
         } else show_login_modal_if_error();
       }
     });
-  }
-
-  function change_neutral_rating(self) {
-    var rating_div = self.closest('.post').find('.rating_post strong'),
-      rating_val = parseInt(rating_div.text());
-    if (self.hasClass('image_claps')){
-      rating_div.html(rating_val - 1);
-    } else {
-      rating_div.html(rating_val + 1);
-    }
   }
 
   function update_class_neutral_vote(el) {
