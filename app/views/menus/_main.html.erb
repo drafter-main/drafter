@@ -3,19 +3,17 @@
     <div class="navbar-header">
       <a href="<%= root_path %>"><img src="<%= get_main_logo %>" alt="logo" id="logo"></a>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
       <ul class="nav navbar-nav left_buttons">
         <li class= <%= "active" if current_page?(controller: 'posts', action: 'index') %> ><a href="<%= root_path %>">Гаряче</a></li>
         <li class= <%= "active" if current_page?(controller: 'posts', action: 'best') %> ><a href="<%= best_posts_path %>">Найкраще</a></li>
         <li class= <%= "active" if current_page?(controller: 'posts', action: 'most_recent') %> ><a href="<%= most_recent_posts_path %>">Нове</a></li>
         <li>
-          <span class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+          <span class="dropdown-toggle tags_dropdown <%= 'active' if tags_nav_active? %> " data-toggle="dropdown" aria-expanded="true">
             Більше
           </span>
           <ul class="dropdown-menu" role="menu">
             <% @tags.each do |tag| %>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="<%= tag_path(tag.name) %>"><%= tag.name %></a></li>
+              <li class=<%= 'active' if tag_item_active?(tag.name) %>  role="presentation"><a role="menuitem" tabindex="-1" href="<%= tag_path(tag.name) %>"><%= tag.name %></a></li>
             <% end %>
           </ul>
         </li>

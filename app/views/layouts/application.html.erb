@@ -12,33 +12,35 @@
   <%= render 'menus/main'%>
   <div id="content_main">
     <input type="hidden" id="active_user" value="<%= current_user ? true : false %>">
-    <%= yield %>
+    <div class="main_body <%= 'col-xs-9' if show_right_block? %>">
+      <%= yield %>
+    </div>
   </div>
-<!--   <div class="main_body col-xs-7">
-  </div>
-  <div class="right_column col-xs-4">
-    <div class="tags_popular row">
-      <h5>Популярні теги</h5>
-      <hr>
-      <% #@tags.each do |tag| %>
-        <div class="tag_unit">
-          <a href='<%#= tag_path(tag.name) %>'>
-            <span class="tag_name"><%#= tag.name %></span>
-            <span class="tag_quantity"><%#= tag.taggings_count %></span>
-          </a>
+  <% if show_right_block? %>
+      <div class="right_column col-xs-2">
+        <div class="tags_popular row">
+          <h5>Популярні теги</h5>
+          <hr>
+          <% @tags.each do |tag| %>
+            <div class="tag_unit">
+              <a href='<%= tag_path(tag.name) %>'>
+                <span class="tag_name"><%= tag.name %></span>
+                <span class="tag_quantity"><%= tag.taggings_count %></span>
+              </a>
+            </div>
+          <% end %>
         </div>
-      <% #end %>
-    </div>
-    <div class="banner row" style="margin-top: 30px;">
-      Хуянер
-    </div>
-  </div>
+        <div class="banner row" style="margin: 30px 0 30px 0;">
+          Хуянер
+        </div>
+        <div id="vk_groups"></div>
+      </div>
+  <% end %>
 
-    <div id="vk_groups"></div>
     <script type="text/javascript">
       VK.Widgets.Group("vk_groups", {mode: 0, width: "220", height: "250", color1: 'FFFFFF', color2: '2B587A', color3: '5B7FA6'}, 20003900);
     </script>
-  </div> -->
+
   <%= render 'modals/user_actions'%>
 </body>
 </html>
