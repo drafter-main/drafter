@@ -1,4 +1,13 @@
 module ApplicationHelper
+
+  def not_full_profile_message
+    # тіп валити його постійно для чуваків, бо пускає без валідації з вк
+    return 'Введи емейл та пароль в налаштуваннях' if !current_user.email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i &&
+                                                      current_user.crypted_password.blank?
+    return 'Введи пароль в налаштуваннях' if !current_user.email =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+    'Введи пароль в налаштуваннях' if current_user.crypted_password.blank?
+  end
+
   def is_admin?
     current_user && current_user.admin ? true : false
   end

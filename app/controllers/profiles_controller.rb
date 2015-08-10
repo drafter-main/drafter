@@ -20,7 +20,10 @@ class ProfilesController < ApplicationController
   end
 
   def change_settings
-    validate_change_params(params)
+    unless validate_change_params(params)
+      flash[:alert] = @message
+      return redirect_to action: 'settings'
+    end
     @user.email = params['email']
     @user.nick = params['nick']
     @user.avatar = save_user_avatar(params[:avatar], @user.folder, @user.avatar, params[:image_square]) if params[:avatar]
@@ -32,18 +35,17 @@ class ProfilesController < ApplicationController
     if params['old-pass'].present?
       check_pass_confirmation(params)
       if @user.password == params['old-pass']
-        update_pass(params)
+        update_pass
       else
         flash[:alert] = 'Невірний пароль'
         return redirect_to(settings_profiles_path)
       end
     else
       if @user.crypted_password.present?
-        check_pass_confirmation(params)
-        update_pass(params)
+        check_pass_confirmation
+        update_pass
       else
-        flash[:alert] = 'Спробуйте ще раз, будь ласка'
-        return redirect_to(settings_profiles_path)
+        update_pass
       end
     end
   end
@@ -61,14 +63,14 @@ class ProfilesController < ApplicationController
 
   private
 
-  def update_pass(params)
+  def update_pass
     @user.password = params['new-pass']
     @user.save(validate: false)
     flash[:alert] = 'Пароль успішно змінений'
     redirect_to action: 'settings'
   end
 
-  def check_pass_confirmation(params)
+  def check_pass_confirmation
     unless params['new-pass'] == params['new-pass-confirm']
       flash[:alert] = 'Підтвердження пароля не збіглось'
       redirect_to action: 'settings'
@@ -76,14 +78,16 @@ class ProfilesController < ApplicationController
   end
 
   def validate_change_params(data)
-    if data['nick'].length == 0
-      flash[:alert] = 'Нік не може бути порожній'
-      redirect_to action: 'settings'
+    res = true
+    unless (3..10).include?(data['nick'].length)
+      @message = 'Формат ніка невірний'
+      res = false
     end
     unless data['email'] =~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-      flash[:alert] = 'Формат емейла невірний'
-      redirect_to action: 'settings'
+      @message = 'Формат емейла невірний'
+      res = false
     end
+    res
   end
 
   def find_user
