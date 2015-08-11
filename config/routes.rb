@@ -29,7 +29,7 @@ resources :posts do
   end
 end
 
-resources :tags, only: [:index, :show] do
+resources :tags, only: [:show] do
   member do
     put :add_to_blacklist
   end

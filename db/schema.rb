@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150601211111) do
+ActiveRecord::Schema.define(version: 20150810193703) do
 
   create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",    limit: 4,   null: false
@@ -19,6 +19,11 @@ ActiveRecord::Schema.define(version: 20150601211111) do
     t.string   "uid",        limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "blacklists", force: :cascade do |t|
+    t.integer "user_id", limit: 4
+    t.text    "tags",    limit: 65535
   end
 
   create_table "comments", force: :cascade do |t|

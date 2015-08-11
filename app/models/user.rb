@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :receivers, class_name: 'Comment', foreign_key: 'receiver_id'
   has_many :posts
   has_many :authentications, :dependent => :destroy
+  has_one :blacklist
   accepts_nested_attributes_for :authentications
 
   acts_as_voter

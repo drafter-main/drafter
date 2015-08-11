@@ -1,2 +1,3 @@
 <h1><%= @tag.name %></h1>
+<%= link_to 'Додати в ігнор', add_to_blacklist_tag_path(@tag.name), method: :put %>
 <div><%= render @posts %></div>

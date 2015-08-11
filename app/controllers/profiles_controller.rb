@@ -33,7 +33,7 @@ class ProfilesController < ApplicationController
 
   def change_password
     if params['old-pass'].present?
-      check_pass_confirmation(params)
+      check_pass_confirmation
       if @user.password == params['old-pass']
         update_pass
       else
